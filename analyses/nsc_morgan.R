@@ -22,6 +22,7 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(brms)
+library(rstanarm)
 
 
 
@@ -65,24 +66,31 @@ total.allhist
 
 
 #### Let's start with total 
-sug.mod.rand <- brm(sugar ~ season + (season|incr), data=df )
-sug.mod.rand
+tot.mod.rand <- brm(total ~ season + (season|incr), data=df )
+tot.mod.rand
 
+### Now, let's try making incr the fixed effects and season the random effects
+tot.arm.inc <- stan_glmer(total ~ incr + (incr|season), data=df, family=poisson(),
+                          control=list(max_treedepth = 15,adapt_delta = 0.99))
 
+#source("~/Documents/git/nscradiocarbon/analyses/source/stan_utility.R")
+#check_all_diagnostics(tot.arm.inc)
+
+launch_shinystan(tot.arm.inc)
 
 ######################################################################
 #### Now for mu plots based of bb_analysis/models_stan_plotting.R ###
 ######################################################################
 
 figpath <- "~/Desktop"
-figpathmore <- "sugar_brms" ### change based on model
+figpathmore <- "total_brms" ### change based on model
 
 source("~/Documents/git/classes/Stats/exp_muplot_brms.R")
 cols <- adjustcolor("indianred3", alpha.f = 0.3) 
 my.pal <- rep(brewer.pal(n = 8, name = "Dark2"), 5)
 
 alphahere = 0.4
-xlab <- "Model estimate of change in sugar concentration"
+xlab <- "Model estimate of change in total concentration"
 
 incr <- unique(df$incr)
 

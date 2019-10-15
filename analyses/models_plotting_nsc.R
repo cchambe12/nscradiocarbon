@@ -21,6 +21,8 @@ library(dplyr)
 library(tidyr)
 library(brms)
 library(rstanarm)
+library(RColorBrewer)
+library(broom)
 
 ## Load the data
 setwd("~/Documents/git/nscradiocarbon/analyses/")
@@ -41,24 +43,27 @@ diff.starch <- diff[(diff$method=="starch"),]
 }
 
 alltot <- full_join(ring.total, diff.total)
+alltot$season <- ifelse(alltot$season=="spring", "aspring", alltot$season)
+alltot$season <- ifelse(alltot$season=="summer", "bsummer", alltot$season)
+alltot$season <- ifelse(alltot$season=="autumn", "cautumn", alltot$season)
 
 
-load("stan/allcomp.mod.Rdata")
+load("stan/allwood_incrrand.Rdata")
 
 
 figpath <- "figures"
 figpathmore <- "totalnsc_brms" ### change based on model
 
-source("~/Documents/git/classes/Stats/exp_muplot_brms.R")
+source("exp_muplot_brms.R")
 cols <- adjustcolor("indianred3", alpha.f = 0.3) 
 my.pal <- rep(brewer.pal(n = 8, name = "Dark2"), 5)
 
 alphahere = 0.4
 xlab <- "Model estimate of change in total concentration"
 
-incr <- unique($increment)
+incr <- unique(alltot$increment)
 
-modelhere <- allcomp.mod
+modelhere <- allincr.mod
 
 
 intercept <- coef(modelhere, prob=c(0.25, 0.75))$incr[, c(1, 3:4), 1] %>%
@@ -172,7 +177,7 @@ for(i in 1:length(incr)){
 winterring$parameter<-new.names
 mod.ranef <- full_join(mod.ranef, winterring)
 
-ints <- c("intercept[1]", "intercept[2]", "intercept[3]", "intercept[4]", "intercept[5]")
+ints <- c("intercept[1]", "intercept[2]", "intercept[3]", "intercept[4]", "intercept[5]", "intercept[6]")
 mod.ranef$int.mean <- rep(mod.ranef$mean[(mod.ranef$parameter%in%ints)])
 mod.ranef$int.25 <- rep(mod.ranef$`25%`[mod.ranef$parameter%in%ints])
 mod.ranef$int.75 <- rep(mod.ranef$`75%`[mod.ranef$parameter%in%ints])
@@ -183,7 +188,7 @@ mod.ranef$`75%` <- ifelse(!(mod.ranef$parameter%in%ints), mod.ranef$`75%` + mod.
 
 modoutput <- tidy(modelhere, prob=c(0.5))
 
-muplotfx(modelhere, "", 8, 8, c(0,4), c(-5, 60) , 62, 3.5)
+muplotfx(modelhere, "", 8, 8, c(0,8), c(-5, 60) , 62, 5)
 
 
 

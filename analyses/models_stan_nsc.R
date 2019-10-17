@@ -29,6 +29,14 @@ setwd("~/Documents/git/nscradiocarbon/analyses/")
 ring <- read.csv("input/ring.csv")
 diff <- read.csv("input/diff.csv")
 
+ring$season <- ifelse(ring$season=="spring", "aspring", ring$season)
+ring$season <- ifelse(ring$season=="summer", "bsummer", ring$season)
+ring$season <- ifelse(ring$season=="autumn", "cautumn", ring$season)
+
+diff$season <- ifelse(diff$season=="spring", "aspring", diff$season)
+diff$season <- ifelse(diff$season=="summer", "bsummer", diff$season)
+diff$season <- ifelse(diff$season=="autumn", "cautumn", diff$season)
+
 ring.total <- ring[(ring$method=="total"),]
 diff.total <- diff[(diff$method=="total"),]
 
@@ -38,29 +46,42 @@ diff.sugar <- diff[(diff$method=="sugar"),]
 ring.starch <- ring[(ring$method=="starch"),]
 diff.starch <- diff[(diff$method=="starch"),]
 
-## Better understand the data:
-range(ring.total$conc, na.rm=TRUE) ## 6.9 - 152.3
-mean(ring.total$conc, na.rm = TRUE) # 25
-sd(ring.total$conc, na.rm = TRUE) ## 19
-
-
-#tot.arm.inc <- stan_glmer(conc ~ increment + (increment | season), data=ring.total,
- #                         control=list(max_treedepth = 15,adapt_delta = 0.99))
 
 if(FALSE){
-set.seed(12345)
-ringtot.mod <- stan_glmer(conc ~ increment + (increment | season), data=ring.total,
-                            prior_intercept = student_t(21,10,0.1), 
+ringtot.mod <- brm(conc ~ season + (season | increment), data=ring.total, 
                           control=list(max_treedepth = 15,adapt_delta = 0.99))
 
+save(ringtot.mod, file="stan/ringtotalconc_randincr.Rdata")
 
-
-difftot.mod <- stan_glmer(conc ~ increment + (increment | season), data=diff.total,
-                         prior_intercept = student_t(21,10,0.1), 
+difftot.mod <- brm(conc ~ season + (season | increment), data=diff.total,
                          control=list(max_treedepth = 15,adapt_delta = 0.99))
 
+save(difftot.mod, file="stan/difftotalconc_randincr.Rdata")
 }
 
+ringsug.mod <- brm(conc ~ season + (season | increment), data=ring.sugar, 
+                   control=list(max_treedepth = 15,adapt_delta = 0.99))
+
+save(ringsug.mod, file="stan/ringsugarconc_randincr.Rdata")
+
+diffsug.mod <- brm(conc ~ season + (season | increment), data=diff.sugar,
+                   control=list(max_treedepth = 15,adapt_delta = 0.99))
+
+save(diffsug.mod, file="stan/diffsugarconc_randincr.Rdata")
+
+ringstar.mod <- brm(conc ~ season + (season | increment), data=ring.starch, 
+                   control=list(max_treedepth = 15,adapt_delta = 0.99))
+
+save(ringstar.mod, file="stan/ringstarchconc_randincr.Rdata")
+
+diffstar.mod <- brm(conc ~ season + (season | increment), data=diff.starch,
+                   control=list(max_treedepth = 15,adapt_delta = 0.99))
+
+save(diffstar.mod, file="stan/diffstarchconc_randincr.Rdata")
+
+
+
+if(FALSE){
 alltot <- full_join(ring.total, diff.total)
 alltot$season <- ifelse(alltot$season=="spring", "aspring", alltot$season)
 alltot$season <- ifelse(alltot$season=="summer", "bsummer", alltot$season)
@@ -85,6 +106,6 @@ save(allincr.mod, file="stan/allwood_incrrand.Rdata")
 #compare_models(loo1, loo2)
 
 launch_shinystan(ringtot.mod)
-
+}
 
 

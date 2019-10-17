@@ -4,7 +4,7 @@
 # with COLORS for each incr #
 
 muplotfx <- function(modelhere, nameforfig, width, height, ylim, xlim, leg1, leg2){
-  incrnum <- unique(alltot$incr)
+  incrnum <- unique(df$incr)
   pdf(file.path(figpath, paste("", nameforfig, figpathmore, ".pdf", sep="")),
       width = width, height = height)
   par(xpd=FALSE)
@@ -13,12 +13,12 @@ muplotfx <- function(modelhere, nameforfig, width, height, ylim, xlim, leg1, leg
        xlab=xlab, ylab="", main=nameforfig)
   axis(2, at=1:4, labels=rev(c("Spring", "Summer", "Fall", "Winter")), las=1)
   abline(v=0, lty=2, col="darkgrey")
-  rownameshere <- c("b_Intercept", "b_seasonbsummer", "b_seasoncautumn", "b_seasonwinter", "b_woodring",
-                    "b_seasonbsummer:woodring", "b_seasoncautumn:woodring", "b_seasonwinter:woodring")
-  ppeffects <- c("b_Intercept", "b_seasonbsummer", "b_seasoncfall", "b_seasonwinter", "b_woodring",
-                 "b_seasonbsummer:woodring", "b_seasoncautumn:woodring", "b_seasonwinter:woodring") # or 1:4 here...
-  for(i in 1:8){#i=3
-    pos.y<-(8:1)[i]
+  rownameshere <- c("b_Intercept", "b_seasonbsummer", "b_seasoncautumn", "b_seasonwinter")#, "b_woodring",
+                    #"b_seasonbsummer:woodring", "b_seasoncautumn:woodring", "b_seasonwinter:woodring")
+  ppeffects <- c("b_Intercept", "b_seasonbsummer", "b_seasoncfall", "b_seasonwinter")#, "b_woodring",
+                 #"b_seasonbsummer:woodring", "b_seasoncautumn:woodring", "b_seasonwinter:woodring") # or 1:4 here...
+  for(i in 1:4){#i=3
+    pos.y<-(4:1)[i]
     if(i!=1){
     pos.x<-modoutput[(modoutput$term==rownameshere[i]),"estimate"] + 
       modoutput[(modoutput$term=="b_Intercept"), "estimate"]
@@ -42,7 +42,7 @@ muplotfx <- function(modelhere, nameforfig, width, height, ylim, xlim, leg1, leg
     }
   }
   par(xpd=TRUE) # so I can plot legend outside
-  legend(leg1, leg2, sort(unique(gsub("_", " ", alltot$incr))), pch=19,
+  legend(leg1, leg2, sort(unique(gsub("_", " ", df$incr))), pch=19,
          col=alpha(my.pal[1:length(incrnum)], alphahere),
          cex=1, bty="n", text.font=3)
   dev.off()

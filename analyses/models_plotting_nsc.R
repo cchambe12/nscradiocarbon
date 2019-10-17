@@ -31,39 +31,49 @@ setwd("~/Documents/git/nscradiocarbon/analyses/")
 ring <- read.csv("input/ring.csv")
 diff <- read.csv("input/diff.csv")
 
+ring$season <- ifelse(ring$season=="spring", "aspring", ring$season)
+ring$season <- ifelse(ring$season=="summer", "bsummer", ring$season)
+ring$season <- ifelse(ring$season=="autumn", "cautumn", ring$season)
+
+diff$season <- ifelse(diff$season=="spring", "aspring", diff$season)
+diff$season <- ifelse(diff$season=="summer", "bsummer", diff$season)
+diff$season <- ifelse(diff$season=="autumn", "cautumn", diff$season)
+
 ring.total <- ring[(ring$method=="total"),]
 diff.total <- diff[(diff$method=="total"),]
 
-if(FALSE){
+
 ring.sugar <- ring[(ring$method=="sugar"),]
 diff.sugar <- diff[(diff$method=="sugar"),]
 
 ring.starch <- ring[(ring$method=="starch"),]
 diff.starch <- diff[(diff$method=="starch"),]
-}
-
-alltot <- full_join(ring.total, diff.total)
-alltot$season <- ifelse(alltot$season=="spring", "aspring", alltot$season)
-alltot$season <- ifelse(alltot$season=="summer", "bsummer", alltot$season)
-alltot$season <- ifelse(alltot$season=="autumn", "cautumn", alltot$season)
 
 
-load("stan/allwood_incrrand.Rdata")
+
+#load("stan/ringtotalconc_randincr.Rdata")
+#load("stan/difftotalconc_randincr.Rdata")
+#load("stan/ringsugarconc_randincr.Rdata")
+load("stan/diffsugarconc_randincr.Rdata")
+#load("stan/ringstarchconc_randincr.Rdata")
+#load("stan/diffstarchconc_randincr.Rdata")
 
 
 figpath <- "figures"
-figpathmore <- "totalnsc_brms" ### change based on model
+figpathmore <- "diffsugar_brms" ### change based on model
 
 source("exp_muplot_brms.R")
 cols <- adjustcolor("indianred3", alpha.f = 0.3) 
 my.pal <- rep(brewer.pal(n = 8, name = "Dark2"), 5)
 
 alphahere = 0.4
-xlab <- "Model estimate of change in total concentration"
+xlab <- "Model estimate of change in sugar concentration (diffuse porous)"
 
-incr <- unique(alltot$increment)
+df <- diff.sugar
+incr <- unique(df$increment)
 
-modelhere <- allincr.mod
+modelhere <- diffsug.mod
+
 
 
 intercept <- coef(modelhere, prob=c(0.25, 0.75))$incr[, c(1, 3:4), 1] %>%
@@ -121,6 +131,7 @@ for(i in 1:length(incr)){
 winter$parameter<-new.names
 mod.ranef <- full_join(mod.ranef, winter)
 
+if(FALSE){
 woodring <- coef(modelhere, prob=c(0.25, 0.75))$incr[, c(1, 3:4), 4] %>%
   as.data.frame() %>%
   round(digits = 2) %>% 
@@ -176,6 +187,7 @@ for(i in 1:length(incr)){
 }
 winterring$parameter<-new.names
 mod.ranef <- full_join(mod.ranef, winterring)
+}
 
 ints <- c("intercept[1]", "intercept[2]", "intercept[3]", "intercept[4]", "intercept[5]", "intercept[6]")
 mod.ranef$int.mean <- rep(mod.ranef$mean[(mod.ranef$parameter%in%ints)])
@@ -188,7 +200,7 @@ mod.ranef$`75%` <- ifelse(!(mod.ranef$parameter%in%ints), mod.ranef$`75%` + mod.
 
 modoutput <- tidy(modelhere, prob=c(0.5))
 
-muplotfx(modelhere, "", 8, 8, c(0,8), c(-5, 60) , 62, 5)
+muplotfx(modelhere, "", 8, 8, c(0,4), c(-5, 60) , 62, 3.5)
 
 
 

@@ -54,25 +54,25 @@ diff.starch <- diff[(diff$method=="starch"),]
 #load("stan/ringtotalconc_randincr.Rdata")
 #load("stan/difftotalconc_randincr.Rdata")
 #load("stan/ringsugarconc_randincr.Rdata")
-load("stan/diffsugarconc_randincr.Rdata")
+#load("stan/diffsugarconc_randincr.Rdata")
 #load("stan/ringstarchconc_randincr.Rdata")
-#load("stan/diffstarchconc_randincr.Rdata")
+load("stan/diffstarchconc_randincr.Rdata")
 
 
 figpath <- "figures"
-figpathmore <- "diffsugar_brms" ### change based on model
+figpathmore <- "diffstarch_brms" ### change based on model
 
 source("exp_muplot_brms.R")
 cols <- adjustcolor("indianred3", alpha.f = 0.3) 
 my.pal <- rep(brewer.pal(n = 8, name = "Dark2"), 5)
 
 alphahere = 0.4
-xlab <- "Model estimate of change in sugar concentration (diffuse porous)"
+xlab <- "Model estimate of change in starch concentration (diffuse porous)"
 
-df <- diff.sugar
+df <- diff.starch
 incr <- unique(df$increment)
 
-modelhere <- diffsug.mod
+modelhere <- diffstar.mod
 
 
 
@@ -200,7 +200,7 @@ mod.ranef$`75%` <- ifelse(!(mod.ranef$parameter%in%ints), mod.ranef$`75%` + mod.
 
 modoutput <- tidy(modelhere, prob=c(0.5))
 
-muplotfx(modelhere, "", 8, 8, c(0,4), c(-5, 60) , 62, 3.5)
+muplotfx(modelhere, "", 8, 8, c(0,4), c(-10, 70) , 72, 3.5)
 
 
 

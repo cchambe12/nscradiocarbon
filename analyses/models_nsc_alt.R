@@ -26,8 +26,13 @@ library(rstanarm)
 setwd("~/Documents/git/nscradiocarbon/analyses/")
 
 ### Ring-porous first:
-ring <- read.csv("input/ring.csv")
-diff <- read.csv("input/diff.csv")
+#ring <- read.csv("input/ring.csv")
+#diff <- read.csv("input/diff.csv")
+
+all <- read.csv("input/CC_data.csv")
+
+ring <- all[(all$wood=="ring"),]
+diff <- all[(all$wood=="diff"),]
 
 ring$season <- ifelse(ring$season=="spring", "aspring", ring$season)
 ring$season <- ifelse(ring$season=="summer", "bsummer", ring$season)

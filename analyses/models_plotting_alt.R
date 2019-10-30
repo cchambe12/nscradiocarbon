@@ -69,11 +69,12 @@ figpath <- "figures"
 figpathmore <- "diffstarch_seas" ### change based on model
 
 source("exp_muplot_alt.R")
-cols <- adjustcolor("indianred3", alpha.f = 0.3) 
-my.pal <- rep(brewer.pal(n = 8, name = "Dark2"), 5)
+cols <- "black"
+my.pal <- rep(rev(c("grey60", "grey70", "grey80", "grey90")), 4)
+my.pch <- rep(15:18)
 
-alphahere = 0.4
-xlab <- "Model estimate of change in starch concentration (diffuse porous)"
+alphahere = 1
+xlab <- "Model estimate of starch concentration"
 
 df <- diff.starch
 season <- unique(df$season)

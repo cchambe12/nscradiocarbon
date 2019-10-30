@@ -23,12 +23,12 @@ muplotfx <- function(modelhere, nameforfig, width, height, ylim, xlim, leg1, leg
     pos.x<-modoutput[(modoutput$term==rownameshere[i]),"estimate"] + 
       modoutput[(modoutput$term=="b_Intercept"), "estimate"]
     lines(modoutput[(modoutput$term==rownameshere[i]),c("lower","upper")]+
-                   modoutput[(modoutput$term=="b_Intercept"),c("lower","upper")],rep(pos.y,2),col="darkgrey")
+                   modoutput[(modoutput$term=="b_Intercept"),c("lower","upper")],rep(pos.y,2),col="black")
     } else{
       pos.x<- modoutput[(modoutput$term==rownameshere[i]),"estimate"]
-      lines(modoutput[(modoutput$term==rownameshere[i]),c("lower","upper")],rep(pos.y,2),col="darkgrey")
+      lines(modoutput[(modoutput$term==rownameshere[i]),c("lower","upper")],rep(pos.y,2),col="black")
     }
-    points(pos.x,pos.y,cex=1.5,pch=19,col="darkblue")
+    points(pos.x,pos.y,cex=1.5,pch=19,col="black")
     for(seassi in 1:length(seasnum)){#incrsi=4
       pos.sps.i<-which(grepl(paste("[",seassi,"]",sep=""),mod.ranef$parameter,fixed=TRUE))
       jitt<-runif(1,0.05,0.4)
@@ -36,15 +36,15 @@ muplotfx <- function(modelhere, nameforfig, width, height, ylim, xlim, leg1, leg
       pos.x.sps.i<-mod.ranef[pos.sps.i[i],"mean"]
       lines(mod.ranef[pos.sps.i[i],c("25%","75%")],rep(pos.y.sps.i,2),
             col=alpha(my.pal[seassi], alphahere))
-      points(pos.x.sps.i,pos.y.sps.i,cex=0.8, col=alpha(my.pal[seassi], alphahere))
+      points(pos.x.sps.i,pos.y.sps.i,cex=0.8, col=alpha(my.pal[seassi], alphahere), pch=my.pch[seassi])
       
       
     }
   }
   par(xpd=TRUE) # so I can plot legend outside
-  legend(leg1, leg2, pch=19, #sort(unique(gsub("_", " ", df$season)))
+  legend(leg1, leg2, #sort(unique(gsub("_", " ", df$season)))
          col=alpha(my.pal[1:length(seasnum)], alphahere),
-         cex=1, bty="n", text.font=3,
+         cex=1, bty="n", pch=my.pch[1:length(seasnum)],
          legend=c("Spring", "Summer", "Autumn", "Winter"))
   dev.off()
   

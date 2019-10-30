@@ -70,8 +70,8 @@ figpathmore <- "ringtotal_seas" ### change based on model
 
 source("exp_muplot_alt.R")
 cols <- "black"
-my.pal <- rep(rev(c("grey60", "grey70", "grey80", "grey90")), 4)
-my.pch <- rep(15:18)
+my.pal <- rep(rev(c("grey20", "grey40", "grey60", "grey80")), 4)
+my.pch <- rep(2:5)
 
 alphahere = 1
 xlab <- "Model estimate of total concentration"
@@ -178,6 +178,5 @@ mod.ranef$`75%` <- ifelse(!(mod.ranef$parameter%in%ints), mod.ranef$`75%` + mod.
 modoutput <- tidy(modelhere, prob=c(0.5))
 
 muplotfx(modelhere, "", 8, 8, c(0,6), c(-10, 70) , 72, 4.5)
-
 
 

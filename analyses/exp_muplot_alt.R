@@ -5,8 +5,10 @@
 
 muplotfx <- function(modelhere, nameforfig, width, height, ylim, xlim, leg1, leg2){
   seasnum <- unique(df$season)
-  svg(file.path(figpath, paste("", nameforfig, figpathmore, ".svg", sep="")),
-      width = width, height = height)
+  #dev.new()
+  quartz()
+  #pdf(file.path(figpath, paste("", nameforfig, figpathmore, ".pdf", sep="")),
+   #   width = width, height = height)
   par(xpd=FALSE)
   par(mar=c(5,7,3,10))
   plot(x=NULL,y=NULL, xlim=xlim, yaxt='n', ylim=ylim,
@@ -28,24 +30,25 @@ muplotfx <- function(modelhere, nameforfig, width, height, ylim, xlim, leg1, leg
       pos.x<- modoutput[(modoutput$term==rownameshere[i]),"estimate"]
       lines(modoutput[(modoutput$term==rownameshere[i]),c("lower","upper")],rep(pos.y,2),col="black")
     }
-    points(pos.x,pos.y,cex=1.5,pch=19,col="black")
+    points(pos.x,pos.y,cex=2,pch=19,col="black")
     for(seassi in 1:length(seasnum)){#incrsi=4
       pos.sps.i<-which(grepl(paste("[",seassi,"]",sep=""),mod.ranef$parameter,fixed=TRUE))
       jitt<-runif(1,0.05,0.4)
       pos.y.sps.i<-pos.y-jitt
       pos.x.sps.i<-mod.ranef[pos.sps.i[i],"mean"]
       lines(mod.ranef[pos.sps.i[i],c("25%","75%")],rep(pos.y.sps.i,2),
-            col=alpha(my.pal[seassi], alphahere))
-      points(pos.x.sps.i,pos.y.sps.i,cex=0.8, col=alpha(my.pal[seassi], alphahere), pch=my.pch[seassi])
+            col=my.pal[seassi])
+      points(pos.x.sps.i,pos.y.sps.i,cex=1.2, col=my.pal[seassi], pch=my.pch[seassi])
       
       
     }
   }
   par(xpd=TRUE) # so I can plot legend outside
   legend(leg1, leg2, #sort(unique(gsub("_", " ", df$season)))
-         col=alpha(my.pal[1:length(seasnum)], alphahere),
+         col=my.pal[1:length(seasnum)],
          cex=1, bty="n", pch=my.pch[1:length(seasnum)],
          legend=c("Spring", "Summer", "Autumn", "Winter"))
-  dev.off()
+  #dev.off()
   
 }
+

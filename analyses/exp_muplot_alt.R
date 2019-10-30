@@ -6,7 +6,6 @@
 muplotfx <- function(modelhere, nameforfig, width, height, ylim, xlim, leg1, leg2){
   seasnum <- unique(df$season)
   #dev.new()
-  quartz()
   #pdf(file.path(figpath, paste("", nameforfig, figpathmore, ".pdf", sep="")),
    #   width = width, height = height)
   par(xpd=FALSE)
@@ -33,7 +32,7 @@ muplotfx <- function(modelhere, nameforfig, width, height, ylim, xlim, leg1, leg
     points(pos.x,pos.y,cex=2,pch=19,col="black")
     for(seassi in 1:length(seasnum)){#incrsi=4
       pos.sps.i<-which(grepl(paste("[",seassi,"]",sep=""),mod.ranef$parameter,fixed=TRUE))
-      jitt<-runif(1,0.05,0.4)
+      jitt<-runif(1,0.1,0.5)
       pos.y.sps.i<-pos.y-jitt
       pos.x.sps.i<-mod.ranef[pos.sps.i[i],"mean"]
       lines(mod.ranef[pos.sps.i[i],c("25%","75%")],rep(pos.y.sps.i,2),

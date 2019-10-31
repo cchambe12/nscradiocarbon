@@ -20,20 +20,21 @@ rad.diff <- radio[(radio$wood=="diff"),]
 rad.ring <- radio[(radio$wood=="ring"),]
 
 
-raddiff.mod <- brm(age ~ increment, data=rad.diff,
-               control=list(max_treedepth = 15,adapt_delta = 0.99))
+#raddiff.mod <- brm(age ~ increment, data=rad.diff,
+ #              control=list(max_treedepth = 15,adapt_delta = 0.99))
 
-save(raddiff.mod, file="stan/radiodiff_mod.Rdata")
+#save(raddiff.mod, file="stan/radiodiff_mod.Rdata")
 
-radring.mod <- brm(age ~ increment, data=rad.ring,
-                   control=list(max_treedepth = 15,adapt_delta = 0.99))
+#radring.mod <- brm(age ~ increment, data=rad.ring,
+ #                  control=list(max_treedepth = 15,adapt_delta = 0.99))
 
-save(radring.mod, file="stan/radioring_mod.Rdata")
+#save(radring.mod, file="stan/radioring_mod.Rdata")
 
 
 ######## Now for some plotting... #####
-#setwd("~/Documents/git/nscradiocarbon")
-#load("orig_full.Rdata")
+setwd("~/Documents/git/nscradiocarbon/analyses")
+load("stan/radioring_mod.Rdata")
+load("stan/radiodiff_mod.Rdata")
 
 if(FALSE){
   raddiff<-as.data.frame(tidy(raddiff.mod, prob=0.9))
@@ -59,12 +60,12 @@ if(FALSE){
   names(radring98)<-c("term", "estimate", "error", "2%", "98%")
   radring <- full_join(radring, radring98)
   radring <- subset(radring, select=c("term", "estimate", "2%", "10%", "25%", "75%", "90%", "98%"))
-  write.csv(radring, file="output/radringuse.csv", row.names=FALSE)
+  write.csv(radring, file="output/radring.csv", row.names=FALSE)
 }
 #radring <- read.csv("output/radringuse.csv", header=TRUE)
 
 ### Now to make the plots
-modoutput <- radring50 #modelhere
+modoutput <- raddiff50 #modelhere
 
 modoutput$term <- ifelse(modoutput$term=="b_Intercept", "b_incrementbranch", modoutput$term)
 modoutput<-modoutput[1:10,]
@@ -82,21 +83,35 @@ modoutput$clean.25 <- ifelse(modoutput$term!="branch",
 modoutput$clean.75 <- ifelse(modoutput$term!="branch",
                              modoutput$`75%` + modoutput$int.75, modoutput$`75%`)
 
-modoutput$Jvar<-seq(1, 10, by=1)
-modoutput$Jvar <- rev(modoutput$Jvar)
+modoutput$Jvar<-NA
+modoutput$Jvar <- ifelse(modoutput$term=="branch", 10, modoutput$Jvar)
+modoutput$Jvar <- ifelse(modoutput$term=="S1", 9, modoutput$Jvar)
+modoutput$Jvar <- ifelse(modoutput$term=="S2", 8, modoutput$Jvar)
+modoutput$Jvar <- ifelse(modoutput$term=="S3", 7, modoutput$Jvar)
+modoutput$Jvar <- ifelse(modoutput$term=="S4", 6, modoutput$Jvar)
+modoutput$Jvar <- ifelse(modoutput$term=="R1", 5, modoutput$Jvar)
+modoutput$Jvar <- ifelse(modoutput$term=="R2", 4, modoutput$Jvar)
+modoutput$Jvar <- ifelse(modoutput$term=="R3", 3, modoutput$Jvar)
+modoutput$Jvar <- ifelse(modoutput$term=="R4", 2, modoutput$Jvar)
+modoutput$Jvar <- ifelse(modoutput$term=="fineroot", 1, modoutput$Jvar)
 
 
 
-estimates<-c("Branch", "Fineroot", "Root 1", "Root 2", "Root 3", "Root 4",
-             "Shoot 1", "Shoot 2","Shoot 3", "Shoot 4")
+estimates<-c("Branch", "0-0.5", "0.5-1.0", "1.0-1.5", "1.5-2.0", "0-0.5", 
+             "0.5-1.0", "1.0-1.5", "1.5-2.0", "Fine root")
 estimates<-rev(estimates)
 
 radcarb<-ggplot(modoutput, aes(x=clean.25, xend=clean.75, y=Jvar, yend=Jvar)) +
-  geom_vline(xintercept=0, linetype="dotted") + geom_point(aes(x=estclean, y=Jvar)) +
-  geom_segment(arrow = arrow(length = unit(0.00, "npc"))) +
+  geom_vline(xintercept=0, linetype="dotted") + 
+  geom_point(aes(x=estclean, y=Jvar, col=term), size=2) +
+  scale_color_manual(values=c("darkseagreen4","tan3","chocolate4",
+                              "chocolate4","chocolate4","chocolate4",
+                              "orange1","orange1","orange1","orange1"),
+                     labels=c("branch", "S1", "S2", "S3", "S4", "R1", "R2", "R3", "R4", "fineroot")) + ## "branch", "S1", "S2", "S3", "S4", "R1", "R2", "R3", "R4", "fineroot"
+  geom_segment(arrow = arrow(length = unit(0.00, "npc")), aes(col=term)) +
   guides(size=FALSE) +
   scale_y_discrete(limits = sort(unique(modoutput$term)), labels=estimates) +
-  xlab("Model estimate of change in age (ring porous)") + ylab("") + theme_linedraw() +
+  xlab("Model estimate of age") + ylab("") + theme_linedraw() +
   theme(legend.text=element_text(size=7), legend.title = element_text(size=9), 
         legend.background = element_rect(linetype="solid", color="grey", size=0.5),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(), 
@@ -110,13 +125,18 @@ radcarb<-ggplot(modoutput, aes(x=clean.25, xend=clean.75, y=Jvar, yend=Jvar)) +
   annotate("text", x = 10, y = 11, colour = "black", size=3, label="Older") + 
   annotate("text", x = -2.5, y = 11, colour = "black", size=3, label="Younger") 
   
-quartz()
-radcarb
+#quartz()
+#radcarb
 
 
-png("figures/radiocarbon_ring50.png", ### makes it a nice png and saves it so it doesn't take forever to load as a pdf!
+png("figures/radiocarbon_diff50.png", ### makes it a nice png and saves it so it doesn't take forever to load as a pdf!
     width=7,
     height=6, units="in", res = 350 )
 grid.arrange(radcarb)
 dev.off()
 
+library(svglite)
+figpath <- "figures"
+figpathmore <- "radiocarbon_diff50" ### change based on model
+ggsave(file.path(figpath, paste("", figpathmore, ".svg", sep="")),
+    width = 8, height = 8, units="in")

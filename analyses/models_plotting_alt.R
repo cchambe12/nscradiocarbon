@@ -61,25 +61,25 @@ diff.starch <- diff[(diff$method=="starch"),]
 #load("stan/difftotal_seas.Rdata")
 #load("stan/ringsugar_seas.Rdata")
 #load("stan/diffsugar_seas.Rdata")
-#load("stan/ringstarch_seas.Rdata")
-load("stan/diffstarch_seas.Rdata")
+load("stan/ringstarch_seas.Rdata")
+#load("stan/diffstarch_seas.Rdata")
 
 
 figpath <- "figures"
-figpathmore <- "diffstarch_seas" ### change based on model
+figpathmore <- "ringstarch_seas" ### change based on model
 
 source("exp_muplot_alt.R")
 cols <- "black"
-my.pal <- rep(rev(c("grey20", "grey40", "grey60", "grey80")), 4)
-my.pch <- rep(2:5)
+my.pal <- rep(c("indianred1", "darkseagreen4", "darkorange2", "dodgerblue3"), 4)
+#my.pch <- rep(2:5)
 
-alphahere = 1
-xlab <- "Model estimate of starch concentration"
+alphahere = 0.6
+xlab <- "Model estimate of starch concentration (mg/g)"
 
-df <- diff.starch
+df <- ring.starch
 season <- unique(df$season)
 
-modelhere <- diffseas.star
+modelhere <- ringseas.star
 
 
 

@@ -1,0 +1,239 @@
+\documentclass{article}\usepackage[]{graphicx}\usepackage[]{color}
+% maxwidth is the original width if it is less than linewidth
+% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage{Sweave}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{siunitx}
+\usepackage{multirow}
+\usepackage{amssymb} % for math symbols
+\usepackage{amsmath} % for aligning equations
+%\usepackage{hyperref}
+\usepackage{textcomp}
+\usepackage{mdframed}
+\usepackage{longtable}
+\usepackage{natbib}
+%\bibliographystyle{..//bib/styles/gcb}
+%\usepackage[hyphens]{url}
+\usepackage{caption}
+\setlength{\captionmargin}{30pt}
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{10pt}
+\topmargin -1.5cm        
+\oddsidemargin -0.04cm   
+\evensidemargin -0.04cm
+\textwidth 16.59cm
+\textheight 21.94cm 
+%\pagestyle{empty} %comment if want page numbers
+\parskip 7.2pt
+\renewcommand{\baselinestretch}{1.5}
+\parindent 0pt
+\usepackage{lineno}
+\linenumbers
+
+\newmdenv[
+  topline=true,
+  bottomline=true,
+  skipabove=\topsep,
+  skipbelow=\topsep
+]{siderules}
+
+%% R Script
+
+
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+\noindent 
+\textbf{\LARGE{Supplement: Tables}} 
+
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+
+% latex table generated in R 3.6.0 by xtable 1.8-4 package
+% Mon Nov 18 11:41:27 2019
+\begin{table}[ht]
+\centering
+\caption{\textbf{Estimates from ring-porous total concentration (mg/g) model}. Using a model testing the effects of increment depth on total concentration (mg/g) for ring-porous species, results in slightly muted variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
+\label{tab:lat}
+\begingroup\footnotesize
+\begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
+  \hline
+ & mean & sd & 25\% & 75\% & 2.5\% & 97.5\% \\ 
+  \hline
+$\mu_{\alpha}$ & 48.34 & 5.65 & 44.86 & 52.00 & 34.28 & 61.04 \\ 
+  $\mu_{increment 1-2}$ & -21.86 & 6.65 & -25.79 & -17.96 & -38.61 & -6.08 \\ 
+  $\mu_{increment 2-3}$ & -32.11 & 7.04 & -36.09 & -27.92 & -48.83 & -15.10 \\ 
+  $\mu_{increment 3-4}$ & -32.11 & 7.26 & -36.25 & -27.80 & -50.45 & -14.96 \\ 
+  $\mu_{increment 4-8}$ & -34.52 & 6.89 & -38.46 & -30.71 & -51.66 & -18.13 \\ 
+  $\mu_{increment 8-pith}$ & -35.81 & 10.80 & -41.13 & -30.24 & -64.40 & -10.48 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
+
+
+% latex table generated in R 3.6.0 by xtable 1.8-4 package
+% Mon Nov 18 11:41:29 2019
+\begin{table}[ht]
+\centering
+\caption{\textbf{Estimates from diffuse-porous total concentration (mg/g) model}. Using a model testing the effects of increment depth on total concentration (mg/g) for diffuse-porous species, results in slightly in greater variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
+\label{tab:lat}
+\begingroup\footnotesize
+\begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
+  \hline
+ & mean & sd & 25\% & 75\% & 2.5\% & 97.5\% \\ 
+  \hline
+$\mu_{\alpha}$ & 31.88 & 6.84 & 27.68 & 36.35 & 15.77 & 47.07 \\ 
+  $\mu_{increment 1-2}$ & -10.86 & 7.39 & -15.15 & -6.56 & -27.79 & 6.65 \\ 
+  $\mu_{increment 2-3}$ & -18.31 & 8.70 & -23.44 & -13.05 & -40.65 & 2.40 \\ 
+  $\mu_{increment 3-4}$ & -18.84 & 8.77 & -24.04 & -13.47 & -41.03 & 0.86 \\ 
+  $\mu_{increment 4-8}$ & -20.52 & 8.99 & -25.64 & -15.18 & -41.75 & 0.15 \\ 
+  $\mu_{increment 8-pith}$ & -17.25 & 11.39 & -22.17 & -12.49 & -48.34 & 12.08 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
+
+
+% latex table generated in R 3.6.0 by xtable 1.8-4 package
+% Mon Nov 18 11:41:30 2019
+\begin{table}[ht]
+\centering
+\caption{\textbf{Estimates from ring-porous sugar concentration (mg/g) model}. Using a model testing the effects of increment depth on sugar concentration (mg/g) for ring-porous species, results in slightly muted variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
+\label{tab:lat}
+\begingroup\footnotesize
+\begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
+  \hline
+ & mean & sd & 25\% & 75\% & 2.5\% & 97.5\% \\ 
+  \hline
+$\mu_{\alpha}$ & 31.30 & 5.12 & 28.20 & 34.53 & 18.72 & 42.90 \\ 
+  $\mu_{increment 1-2}$ & -11.77 & 5.48 & -14.79 & -8.57 & -26.03 & 1.52 \\ 
+  $\mu_{increment 2-3}$ & -14.80 & 5.69 & -18.17 & -11.42 & -28.44 & -1.18 \\ 
+  $\mu_{increment 3-4}$ & -15.71 & 5.42 & -18.82 & -12.69 & -29.07 & -2.17 \\ 
+  $\mu_{increment 4-8}$ & -17.03 & 5.88 & -20.46 & -13.70 & -31.48 & -2.99 \\ 
+  $\mu_{increment 8-pith}$ & -18.41 & 12.91 & -24.64 & -12.92 & -48.19 & 18.02 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
+
+
+% latex table generated in R 3.6.0 by xtable 1.8-4 package
+% Mon Nov 18 11:41:30 2019
+\begin{table}[ht]
+\centering
+\caption{\textbf{Estimates from diffuse-porous sugar concentration (mg/g) model}. Using a model testing the effects of increment depth on sugar concentration (mg/g) for diffuse-porous species, results in slightly in greater variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
+\label{tab:lat}
+\begingroup\footnotesize
+\begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
+  \hline
+ & mean & sd & 25\% & 75\% & 2.5\% & 97.5\% \\ 
+  \hline
+$\mu_{\alpha}$ & 14.54 & 3.69 & 12.37 & 16.72 & 5.55 & 23.51 \\ 
+  $\mu_{increment 1-2}$ & -1.42 & 1.39 & -2.10 & -0.69 & -5.05 & 1.96 \\ 
+  $\mu_{increment 2-3}$ & -1.93 & 1.25 & -2.60 & -1.26 & -5.32 & 1.12 \\ 
+  $\mu_{increment 3-4}$ & -2.61 & 1.76 & -3.34 & -1.89 & -6.67 & 1.24 \\ 
+  $\mu_{increment 4-8}$ & -3.20 & 2.91 & -4.62 & -1.73 & -11.33 & 4.19 \\ 
+  $\mu_{increment 8-pith}$ & -6.28 & 9.48 & -10.65 & -1.56 & -33.37 & 16.38 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
+
+
+% latex table generated in R 3.6.0 by xtable 1.8-4 package
+% Mon Nov 18 11:41:30 2019
+\begin{table}[ht]
+\centering
+\caption{\textbf{Estimates from ring-porous starch concentration (mg/g) model}. Using a model testing the effects of increment depth on starch concentration (mg/g) for ring-porous species, results in slightly muted variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
+\label{tab:lat}
+\begingroup\footnotesize
+\begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
+  \hline
+ & mean & sd & 25\% & 75\% & 2.5\% & 97.5\% \\ 
+  \hline
+$\mu_{\alpha}$ & 16.90 & 5.21 & 13.71 & 20.13 & 3.83 & 29.63 \\ 
+  $\mu_{increment 1-2}$ & -10.41 & 5.04 & -13.12 & -7.57 & -23.05 & 1.71 \\ 
+  $\mu_{increment 2-3}$ & -17.19 & 5.96 & -20.74 & -13.81 & -31.31 & -2.13 \\ 
+  $\mu_{increment 3-4}$ & -16.57 & 6.49 & -20.26 & -12.98 & -32.11 & -1.83 \\ 
+  $\mu_{increment 4-8}$ & -17.58 & 5.79 & -20.83 & -14.15 & -31.72 & -4.00 \\ 
+  $\mu_{increment 8-pith}$ & -14.52 & 9.01 & -18.02 & -10.59 & -38.85 & 7.01 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
+
+
+% latex table generated in R 3.6.0 by xtable 1.8-4 package
+% Mon Nov 18 11:41:30 2019
+\begin{table}[ht]
+\centering
+\caption{\textbf{Estimates from diffuse-porous starch concentration (mg/g) model}. Using a model testing the effects of increment depth on starch concentration (mg/g) for diffuse-porous species, results in slightly in greater variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
+\label{tab:lat}
+\begingroup\footnotesize
+\begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
+  \hline
+ & mean & sd & 25\% & 75\% & 2.5\% & 97.5\% \\ 
+  \hline
+$\mu_{\alpha}$ & 16.99 & 6.41 & 12.95 & 21.12 & 1.78 & 31.54 \\ 
+  $\mu_{increment 1-2}$ & -9.31 & 7.16 & -13.41 & -5.00 & -28.33 & 6.51 \\ 
+  $\mu_{increment 2-3}$ & -16.07 & 7.97 & -21.07 & -11.26 & -34.47 & 3.39 \\ 
+  $\mu_{increment 3-4}$ & -15.88 & 8.10 & -20.69 & -10.98 & -36.16 & 2.40 \\ 
+  $\mu_{increment 4-8}$ & -17.27 & 8.15 & -22.05 & -12.37 & -36.82 & 2.49 \\ 
+  $\mu_{increment 8-pith}$ & -10.11 & 9.12 & -13.74 & -6.15 & -35.11 & 12.48 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
+
+\end{document}

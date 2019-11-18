@@ -76,10 +76,10 @@ my.pal <- rep(c("indianred1", "darkseagreen4", "darkorange2", "dodgerblue3"), 4)
 alphahere = 0.6
 xlab <- "Model estimate of starch concentration (mg/g)"
 
-df <- ring.starch
+df <- ring.total
 season <- unique(df$season)
 
-modelhere <- ringseas.star
+modelhere <- ringseas.tot
 
 
 
@@ -178,5 +178,8 @@ mod.ranef$`75%` <- ifelse(!(mod.ranef$parameter%in%ints), mod.ranef$`75%` + mod.
 modoutput <- tidy(modelhere, prob=c(0.5))
 
 muplotfx(modelhere, "", 8, 8, c(0,6), c(-10, 70) , 72, 4.5)
+
+
+
 
 

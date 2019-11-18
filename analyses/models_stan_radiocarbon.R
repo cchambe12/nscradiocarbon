@@ -20,15 +20,15 @@ rad.diff <- radio[(radio$wood=="diff"),]
 rad.ring <- radio[(radio$wood=="ring"),]
 
 
-#raddiff.mod <- brm(age ~ increment, data=rad.diff,
- #              control=list(max_treedepth = 15,adapt_delta = 0.99))
+raddiff.mod <- brm(age ~ increment, data=rad.diff,
+               control=list(max_treedepth = 15,adapt_delta = 0.99), iter=4000, warmup=2500)
 
-#save(raddiff.mod, file="stan/radiodiff_mod.Rdata")
+save(raddiff.mod, file="stan/radiodiff_mod.Rdata")
 
-#radring.mod <- brm(age ~ increment, data=rad.ring,
- #                  control=list(max_treedepth = 15,adapt_delta = 0.99))
+radring.mod <- brm(age ~ increment, data=rad.ring,
+                   control=list(max_treedepth = 15,adapt_delta = 0.99), iter=4000, warmup=2500)
 
-#save(radring.mod, file="stan/radioring_mod.Rdata")
+save(radring.mod, file="stan/radioring_mod.Rdata")
 
 
 ######## Now for some plotting... #####
@@ -65,7 +65,7 @@ if(FALSE){
 #radring <- read.csv("output/radringuse.csv", header=TRUE)
 
 ### Now to make the plots
-modoutput <- raddiff50 #modelhere
+modoutput <- raddiff #modelhere
 
 modoutput$term <- ifelse(modoutput$term=="b_Intercept", "b_incrementbranch", modoutput$term)
 modoutput<-modoutput[1:10,]
@@ -128,7 +128,7 @@ radcarb<-ggplot(modoutput, aes(x=clean.25, xend=clean.75, y=Jvar, yend=Jvar)) +
 #quartz()
 #radcarb
 
-
+library(gridExtra)
 png("figures/radiocarbon_diff50.png", ### makes it a nice png and saves it so it doesn't take forever to load as a pdf!
     width=7,
     height=6, units="in", res = 350 )
@@ -140,3 +140,4 @@ figpath <- "figures"
 figpathmore <- "radiocarbon_diff50" ### change based on model
 ggsave(file.path(figpath, paste("", figpathmore, ".svg", sep="")),
     width = 8, height = 8, units="in")
+

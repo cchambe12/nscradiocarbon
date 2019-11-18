@@ -53,34 +53,34 @@ diff.starch <- diff[(diff$method=="starch"),]
 
 #### Total
 ringseas.tot <- brm(conc ~ increment + (increment | season), data=ring.total, 
-                   control=list(max_treedepth = 15,adapt_delta = 0.99))
+                   control=list(max_treedepth = 15,adapt_delta = 0.99), iter=4000, warmup=2500)
 
 save(ringseas.tot, file="stan/ringtotal_seas.Rdata")
 
 diffseas.tot <- brm(conc ~ increment + (increment | season), data=diff.total,
-                   control=list(max_treedepth = 15,adapt_delta = 0.99))
+                   control=list(max_treedepth = 15,adapt_delta = 0.99), iter=4000, warmup=2500)
 
 save(diffseas.tot, file="stan/difftotal_seas.Rdata")
 
 #### Sugar
 ringseas.sug <- brm(conc ~ increment + (increment | season), data=ring.sugar, 
-                    control=list(max_treedepth = 15,adapt_delta = 0.99))
+                    control=list(max_treedepth = 15,adapt_delta = 0.99), iter=4000, warmup=2500)
 
 save(ringseas.sug, file="stan/ringsugar_seas.Rdata")
 
 diffseas.sug <- brm(conc ~ increment + (increment | season), data=diff.sugar,
-                    control=list(max_treedepth = 15,adapt_delta = 0.99))
+                    control=list(max_treedepth = 15,adapt_delta = 0.99), iter=4000, warmup=2500)
 
 save(diffseas.sug, file="stan/diffsugar_seas.Rdata")
 
 #### Starch
 ringseas.star <- brm(conc ~ increment + (increment | season), data=ring.starch, 
-                    control=list(max_treedepth = 15,adapt_delta = 0.99))
+                    control=list(max_treedepth = 15,adapt_delta = 0.99), iter=4000, warmup=2500)
 
 save(ringseas.star, file="stan/ringstarch_seas.Rdata")
 
 diffseas.star <- brm(conc ~ increment + (increment | season), data=diff.starch,
-                    control=list(max_treedepth = 15,adapt_delta = 0.99))
+                    control=list(max_treedepth = 15,adapt_delta = 0.99), iter=4000, warmup=2500)
 
 save(diffseas.star, file="stan/diffstarch_seas.Rdata")
 

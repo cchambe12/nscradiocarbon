@@ -58,11 +58,11 @@ diff.starch <- diff[(diff$method=="starch"),]
 
 
 load("stan/ringtotal_seas.Rdata")
-#load("stan/difftotal_seas.Rdata")
-#load("stan/ringsugar_seas.Rdata")
-#load("stan/diffsugar_seas.Rdata")
-#load("stan/ringstarch_seas.Rdata")
-#load("stan/diffstarch_seas.Rdata")
+load("stan/difftotal_seas.Rdata")
+load("stan/ringsugar_seas.Rdata")
+load("stan/diffsugar_seas.Rdata")
+load("stan/ringstarch_seas.Rdata")
+load("stan/diffstarch_seas.Rdata")
 
 
 figpath <- "figures"

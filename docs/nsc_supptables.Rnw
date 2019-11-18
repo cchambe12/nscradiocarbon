@@ -13,7 +13,7 @@
 \usepackage{mdframed}
 \usepackage{longtable}
 \usepackage{natbib}
-%\bibliographystyle{..//bib/styles/gcb}
+\bibliographystyle{..//bib/styles/gcb}
 %\usepackage[hyphens]{url}
 \usepackage{caption}
 \setlength{\captionmargin}{30pt}
@@ -59,7 +59,8 @@ library(Hmisc)
 \par We estimated the effects of increment depth (i.e., 0-1cm, 1-2cm, 2-3cm, 3-4cm, 4-8cm, 8cm-pith) on total, sugar and starch concentrations for both ring-porous and diffuse-porous species using Bayesian hierarchical models with the brms package \citep{brms}, version 2.3.1,  in R \citep{R}, version 3.3.1. Seasons are modeled hierarchically, generating an estimate of the overall response across season and estimates of season-level responses---and the distribution from which they are drawn. The intercept in the model is increment 0-1cm since the predictors are discrete groups:  
 
 \begin{align*}
-y_i &= \alpha_{season[i]} + \beta_{increment1-2_{season[i]}} + \beta_{increment2-3_{season[i]}} + \beta_{increment3-4_{season[i]}} + \beta_{increment4-8_{season[i]}} + \beta_{increment8-pith_{season[i]}} + \epsilon_i\\,
+y_i &= \alpha_{season[i]} + \beta_{increment1-2_{season[i]}} + \beta_{increment2-3_{season[i]}} + \beta_{increment3-4_{season[i]}}\\
+&+ \beta_{increment4-8_{season[i]}} + \beta_{increment8-pith_{season[i]}} + \epsilon_i\\,
 \end{align*}
 \begin{align*}
 \epsilon_i & \sim N(0,\sigma^2_y) \\
@@ -74,7 +75,22 @@ y_i &= \alpha_{season[i]} + \beta_{increment1-2_{season[i]}} + \beta_{increment2
 \beta_{increment8-pith_{season}} & \sim N(\mu_{increment8-pith}, \sigma_{increment8-pith}) \\
 \end{align*}
 
-where $i$ represents each unique observation, $season$ is the season, $\alpha$ represents the intercept, which is again increment 0-1cm, $\beta$ terms represent slope estimates, and $y$ is the total, sugar or starch concentration. We ran four chains, each with 2,500 warm-up iterations and 4,000 sampling iterations for a total of 6,000 posterior samples for each predictor. We evaluated our model performance based on $\hat{R}$ values that were close to one. We also evaluated high $n_{eff}$ (4000 for most parameters, but as low as 794 for a few parameters in the diffuse-porous sugar concentration model). We additionally assessed chain convergence and posterior predictive checks visually \citep{BDA}.
+where $i$ represents each unique observation, $season$ is the season, $\alpha$ represents the intercept, which is again increment 0-1cm, $\beta$ terms represent slope estimates, and $y$ is the total, sugar or starch concentration. 
+
+We additionally estimated the effects of organ on the radiocarbon age using a Bayesian model \citep{brms, R}, where branch is the intercept since, again, the predictors are discrete groups:
+
+\begin{align*}
+y_i &= \alpha_{[i]} + \beta_{shoot0-0.5_{[i]}} + \beta_{shoot0.5-1_{[i]}} + \beta_{shoot1-1.5_{[i]}}\\
+&+ \beta_{shoot1.5-2_{[i]}} + \beta_{root0-0.5_{[i]}} + \beta_{root0.5-1_{[i]}} + \beta_{root1-1.5_{[i]}}\\
+&+ + \beta_{root1.5-2_{[i]}} + \beta_{fineroot_{[i]}} +\epsilon_{[i]}\\,
+\end{align*}
+\begin{align*}
+\epsilon_i & \sim N(0,\sigma^2_y) \\
+\end{align*}
+
+We ran four chains, each with 2,500 warm-up iterations and 4,000 sampling iterations for a total of 6,000 posterior samples for each predictor for each model. We evaluated our model performance based on $\hat{R}$ values that were close to one. We also evaluated high $n_{eff}$ (4000 for most parameters, but as low as 794 for a few parameters in the diffuse-porous sugar concentration model). We additionally assessed chain convergence and posterior predictive checks visually \citep{BDA}.
+
+\bibliography{..//bib/nsc.bib}
 
 \textbf{\LARGE{Supplement: Tables}} 
 
@@ -86,7 +102,7 @@ rownames(ringtot)<-ringtot$X
 colnames(ringtot) <- c('mean', 'sd', '25%', '75%', '2.5%', '97.5%' )
 
 mod.table <- xtable(ringtot, caption="\\textbf{Estimates from ring-porous total concentration (mg/g) model}. Using a model testing the effects of increment depth on total concentration (mg/g) for ring-porous species, results in slightly muted variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.", 
-        label="tab:lat",align=c(
+        label="tab:ringtot",align=c(
                "|p{0.14\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
@@ -107,7 +123,7 @@ rownames(difftot)<-difftot$X
 colnames(difftot) <- c('mean', 'sd','25%', '75%', '2.5%', '97.5%' )
 
 mod.table <- xtable(difftot, caption="\\textbf{Estimates from diffuse-porous total concentration (mg/g) model}. Using a model testing the effects of increment depth on total concentration (mg/g) for diffuse-porous species, results in slightly greater variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.", 
-        label="tab:lat",align=c(
+        label="tab:difftot",align=c(
                "|p{0.14\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
@@ -128,7 +144,7 @@ rownames(ringsug)<-ringsug$X
 colnames(ringsug) <- c('mean', 'sd','25%', '75%', '2.5%', '97.5%' )
 
 mod.table <- xtable(ringsug, caption="\\textbf{Estimates from ring-porous sugar concentration (mg/g) model}. Using a model testing the effects of increment depth on sugar concentration (mg/g) for ring-porous species, results in slightly muted variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.", 
-        label="tab:lat",align=c(
+        label="tab:ringsug",align=c(
                "|p{0.14\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
@@ -149,7 +165,7 @@ rownames(diffsug)<-diffsug$X
 colnames(diffsug) <- c('mean', 'sd','25%', '75%', '2.5%', '97.5%' )
 
 mod.table <- xtable(diffsug, caption="\\textbf{Estimates from diffuse-porous sugar concentration (mg/g) model}. Using a model testing the effects of increment depth on sugar concentration (mg/g) for diffuse-porous species, results in slightly greater variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.", 
-        label="tab:lat",align=c(
+        label="tab:diffsug",align=c(
                "|p{0.14\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
@@ -170,7 +186,7 @@ rownames(ringstar)<-ringstar$X
 colnames(ringstar) <- c('mean', 'sd','25%', '75%', '2.5%', '97.5%' )
 
 mod.table <- xtable(ringstar, caption="\\textbf{Estimates from ring-porous starch concentration (mg/g) model}. Using a model testing the effects of increment depth on starch concentration (mg/g) for ring-porous species, results in slightly muted variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.", 
-        label="tab:lat",align=c(
+        label="tab:ringstar",align=c(
                "|p{0.14\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
@@ -191,7 +207,7 @@ rownames(diffstar)<-diffstar$X
 colnames(diffstar) <- c('mean', 'sd','25%', '75%', '2.5%', '97.5%' )
 
 mod.table <- xtable(diffstar, caption="\\textbf{Estimates from diffuse-porous starch concentration (mg/g) model}. Using a model testing the effects of increment depth on starch concentration (mg/g) for diffuse-porous species, results in slightly greater variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.", 
-        label="tab:lat",align=c(
+        label="tab:diffstar",align=c(
                "|p{0.14\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
@@ -211,38 +227,48 @@ rownames(ringradio)<-ringradio$X
   ringradio<-ringradio[,-1]      
 colnames(ringradio) <- c('mean', '25%', '75%', '2.5%', '97.5%' )
 
-mod.table <- xtable(diffstar, caption="\\textbf{Estimates from ring-porous radiocarbon ages}. Using a model testing the effects of organ on radiocarbon age for ring-porous species, results in muted variation in age across organs. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.", 
-        label="tab:lat",align=c(
+row.names(ringradio)<-c("$\\mu_{\\alpha}$", "$\\mu_{shoot 0-0.5}$", 
+                   "$\\mu_{shoot 0.5-1}$", "$\\mu_{shoot 1-1.5}$","$\\mu_{shoot 1.5-2}$",
+                  "$\\mu_{root 0-0.5}$", 
+                   "$\\mu_{root 0.5-1}$", "$\\mu_{root 1-1.5}$","$\\mu_{root 1.5-2}$",
+                   "$\\mu_{fineroot}$") 
+
+mod.table <- xtable(ringradio, caption="\\textbf{Estimates from ring-porous radiocarbon ages}. Using a model testing the effects of organ on radiocarbon age for ring-porous species, results in muted variation in age across organs. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.", 
+        label="tab:ringradio",align=c(
                "|p{0.14\\textwidth}|",
-               "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|"))
 
-print(mod.table, include.rownames=TRUE, hline.after = c(-1,0,6),caption.placement="top",size="\\footnotesize",sanitize.rownames.function=identity)
+print(mod.table, include.rownames=TRUE, hline.after = c(-1,0,10),caption.placement="top",size="\\footnotesize",sanitize.rownames.function=identity)
 
 @
 
 <<label=diffradiotab, results="asis", echo=FALSE, warning=FALSE, message=FALSE, , fig.pos="H", fig.width=7, fig.height=4, fig.align='center'>>=
 
-diffradio<-read.csv("../analyses/output/diff_radiocarbon_table.csv", header=TRUE)
+diffradio<-read.csv("../analyses/output/diffuse_radiocarbon_table.csv", header=TRUE)
 rownames(diffradio)<-diffradio$X
   diffradio<-diffradio[,-1]      
 colnames(diffradio) <- c('mean', '25%', '75%', '2.5%', '97.5%' )
 
-mod.table <- xtable(diffstar, caption="\\textbf{Estimates from diffuse-porous radiocarbon ages}. Using a model testing the effects of organ on radiocarbon age for diffuse-porous species, results in slight greater variation in age across organs. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.", 
-        label="tab:lat",align=c(
+row.names(diffradio)<-c("$\\mu_{\\alpha}$", "$\\mu_{shoot 0-0.5}$", 
+                   "$\\mu_{shoot 0.5-1}$", "$\\mu_{shoot 1-1.5}$","$\\mu_{shoot 1.5-2}$",
+                  "$\\mu_{root 0-0.5}$", 
+                   "$\\mu_{root 0.5-1}$", "$\\mu_{root 1-1.5}$","$\\mu_{root 1.5-2}$",
+                   "$\\mu_{fineroot}$") 
+
+mod.table <- xtable(diffradio, caption="\\textbf{Estimates from diffuse-porous radiocarbon ages}. Using a model testing the effects of organ on radiocarbon age for diffuse-porous species, results in slight greater variation in age across organs. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.", 
+        label="tab:diffradio",align=c(
                "|p{0.14\\textwidth}|",
-               "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|",
                "p{0.06\\textwidth}|"))
 
-print(mod.table, include.rownames=TRUE, hline.after = c(-1,0,6),caption.placement="top",size="\\footnotesize",sanitize.rownames.function=identity)
+print(mod.table, include.rownames=TRUE, hline.after = c(-1,0,10),caption.placement="top",size="\\footnotesize",sanitize.rownames.function=identity)
 
 @
 

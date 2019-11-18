@@ -63,7 +63,7 @@
 \usepackage{mdframed}
 \usepackage{longtable}
 \usepackage{natbib}
-%\bibliographystyle{..//bib/styles/gcb}
+\bibliographystyle{..//bib/styles/gcb}
 %\usepackage[hyphens]{url}
 \usepackage{caption}
 \setlength{\captionmargin}{30pt}
@@ -94,28 +94,66 @@
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 \noindent 
-\textbf{\LARGE{Supplement: Tables}} 
-
 \renewcommand{\thetable}{S\arabic{table}}
 \renewcommand{\thefigure}{S\arabic{figure}}
 
+\textbf{\LARGE{Methods: Data analysis}}
+
+\par We estimated the effects of increment depth (i.e., 0-1cm, 1-2cm, 2-3cm, 3-4cm, 4-8cm, 8cm-pith) on total, sugar and starch concentrations for both ring-porous and diffuse-porous species using Bayesian hierarchical models with the brms package \citep{brms}, version 2.3.1,  in R \citep{R}, version 3.3.1. Seasons are modeled hierarchically, generating an estimate of the overall response across season and estimates of season-level responses---and the distribution from which they are drawn. The intercept in the model is increment 0-1cm since the predictors are discrete groups:  
+
+\begin{align*}
+y_i &= \alpha_{season[i]} + \beta_{increment1-2_{season[i]}} + \beta_{increment2-3_{season[i]}} + \beta_{increment3-4_{season[i]}}\\
+&+ \beta_{increment4-8_{season[i]}} + \beta_{increment8-pith_{season[i]}} + \epsilon_i\\,
+\end{align*}
+\begin{align*}
+\epsilon_i & \sim N(0,\sigma^2_y) \\
+\end{align*}
+\noindent The $\alpha$ and each of the five $\beta$ coefficients were modeled at the season level, as follows:
+\begin{align*}
+\alpha_{season} & \sim N(\mu_{\alpha}, \sigma_{\alpha}) \\
+\beta_{increment1-2_{season}} & \sim N(\mu_{increment1-2}, \sigma_{increment1-2}) \\
+\beta_{increment2-3_{season}} & \sim N(\mu_{increment2-3}, \sigma_{increment2-3}) \\
+\beta_{increment3-4_{season}} & \sim N(\mu_{increment3-4}, \sigma_{increment3-4}) \\
+\beta_{increment4-8_{season}} & \sim N(\mu_{increment4-8}, \sigma_{increment4-8}) \\
+\beta_{increment8-pith_{season}} & \sim N(\mu_{increment8-pith}, \sigma_{increment8-pith}) \\
+\end{align*}
+
+where $i$ represents each unique observation, $season$ is the season, $\alpha$ represents the intercept, which is again increment 0-1cm, $\beta$ terms represent slope estimates, and $y$ is the total, sugar or starch concentration. 
+
+We additionally estimated the effects of organ on the radiocarbon age using a Bayesian model \citep{brms, R}, where branch is the intercept since, again, the predictors are discrete groups:
+
+\begin{align*}
+y_i &= \alpha_{[i]} + \beta_{shoot0-0.5_{[i]}} + \beta_{shoot0.5-1_{[i]}} + \beta_{shoot1-1.5_{[i]}}\\
+&+ \beta_{shoot1.5-2_{[i]}} + \beta_{root0-0.5_{[i]}} + \beta_{root0.5-1_{[i]}} + \beta_{root1-1.5_{[i]}}\\
+&+ + \beta_{root1.5-2_{[i]}} + \beta_{fineroot_{[i]}} +\epsilon_{[i]}\\,
+\end{align*}
+\begin{align*}
+\epsilon_i & \sim N(0,\sigma^2_y) \\
+\end{align*}
+
+We ran four chains, each with 2,500 warm-up iterations and 4,000 sampling iterations for a total of 6,000 posterior samples for each predictor for each model. We evaluated our model performance based on $\hat{R}$ values that were close to one. We also evaluated high $n_{eff}$ (4000 for most parameters, but as low as 794 for a few parameters in the diffuse-porous sugar concentration model). We additionally assessed chain convergence and posterior predictive checks visually \citep{BDA}.
+
+\bibliography{..//bib/nsc.bib}
+
+\textbf{\LARGE{Supplement: Tables}} 
+
 % latex table generated in R 3.6.0 by xtable 1.8-4 package
-% Mon Nov 18 11:41:27 2019
+% Mon Nov 18 16:04:02 2019
 \begin{table}[ht]
 \centering
 \caption{\textbf{Estimates from ring-porous total concentration (mg/g) model}. Using a model testing the effects of increment depth on total concentration (mg/g) for ring-porous species, results in slightly muted variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
-\label{tab:lat}
+\label{tab:ringtot}
 \begingroup\footnotesize
 \begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
   \hline
  & mean & sd & 25\% & 75\% & 2.5\% & 97.5\% \\ 
   \hline
-$\mu_{\alpha}$ & 48.34 & 5.65 & 44.86 & 52.00 & 34.28 & 61.04 \\ 
-  $\mu_{increment 1-2}$ & -21.86 & 6.65 & -25.79 & -17.96 & -38.61 & -6.08 \\ 
-  $\mu_{increment 2-3}$ & -32.11 & 7.04 & -36.09 & -27.92 & -48.83 & -15.10 \\ 
-  $\mu_{increment 3-4}$ & -32.11 & 7.26 & -36.25 & -27.80 & -50.45 & -14.96 \\ 
-  $\mu_{increment 4-8}$ & -34.52 & 6.89 & -38.46 & -30.71 & -51.66 & -18.13 \\ 
-  $\mu_{increment 8-pith}$ & -35.81 & 10.80 & -41.13 & -30.24 & -64.40 & -10.48 \\ 
+$\mu_{\alpha}$ & 48.75 & 5.64 & 45.38 & 52.41 & 34.61 & 61.61 \\ 
+  $\mu_{increment 1-2}$ & -22.00 & 6.59 & -25.68 & -18.23 & -38.50 & -6.22 \\ 
+  $\mu_{increment 2-3}$ & -32.26 & 6.93 & -36.05 & -28.16 & -49.72 & -16.45 \\ 
+  $\mu_{increment 3-4}$ & -32.46 & 7.10 & -36.46 & -28.21 & -50.44 & -15.62 \\ 
+  $\mu_{increment 4-8}$ & -34.67 & 6.80 & -38.55 & -30.63 & -51.45 & -18.08 \\ 
+  $\mu_{increment 8-pith}$ & -36.18 & 11.51 & -41.00 & -30.50 & -64.36 & -10.25 \\ 
    \hline
 \end{tabular}
 \endgroup
@@ -123,22 +161,22 @@ $\mu_{\alpha}$ & 48.34 & 5.65 & 44.86 & 52.00 & 34.28 & 61.04 \\
 
 
 % latex table generated in R 3.6.0 by xtable 1.8-4 package
-% Mon Nov 18 11:41:29 2019
+% Mon Nov 18 16:04:02 2019
 \begin{table}[ht]
 \centering
-\caption{\textbf{Estimates from diffuse-porous total concentration (mg/g) model}. Using a model testing the effects of increment depth on total concentration (mg/g) for diffuse-porous species, results in slightly in greater variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
-\label{tab:lat}
+\caption{\textbf{Estimates from diffuse-porous total concentration (mg/g) model}. Using a model testing the effects of increment depth on total concentration (mg/g) for diffuse-porous species, results in slightly greater variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
+\label{tab:difftot}
 \begingroup\footnotesize
 \begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
   \hline
  & mean & sd & 25\% & 75\% & 2.5\% & 97.5\% \\ 
   \hline
-$\mu_{\alpha}$ & 31.88 & 6.84 & 27.68 & 36.35 & 15.77 & 47.07 \\ 
-  $\mu_{increment 1-2}$ & -10.86 & 7.39 & -15.15 & -6.56 & -27.79 & 6.65 \\ 
-  $\mu_{increment 2-3}$ & -18.31 & 8.70 & -23.44 & -13.05 & -40.65 & 2.40 \\ 
-  $\mu_{increment 3-4}$ & -18.84 & 8.77 & -24.04 & -13.47 & -41.03 & 0.86 \\ 
-  $\mu_{increment 4-8}$ & -20.52 & 8.99 & -25.64 & -15.18 & -41.75 & 0.15 \\ 
-  $\mu_{increment 8-pith}$ & -17.25 & 11.39 & -22.17 & -12.49 & -48.34 & 12.08 \\ 
+$\mu_{\alpha}$ & 31.77 & 6.84 & 27.51 & 36.08 & 14.97 & 47.38 \\ 
+  $\mu_{increment 1-2}$ & -10.57 & 6.99 & -14.66 & -6.45 & -27.74 & 6.26 \\ 
+  $\mu_{increment 2-3}$ & -17.99 & 8.67 & -23.12 & -12.86 & -38.27 & 3.54 \\ 
+  $\mu_{increment 3-4}$ & -18.54 & 8.65 & -23.66 & -13.33 & -39.66 & 1.07 \\ 
+  $\mu_{increment 4-8}$ & -20.45 & 8.91 & -25.63 & -14.98 & -43.56 & 0.38 \\ 
+  $\mu_{increment 8-pith}$ & -17.73 & 10.07 & -22.31 & -12.79 & -44.28 & 8.27 \\ 
    \hline
 \end{tabular}
 \endgroup
@@ -146,22 +184,22 @@ $\mu_{\alpha}$ & 31.88 & 6.84 & 27.68 & 36.35 & 15.77 & 47.07 \\
 
 
 % latex table generated in R 3.6.0 by xtable 1.8-4 package
-% Mon Nov 18 11:41:30 2019
+% Mon Nov 18 16:04:02 2019
 \begin{table}[ht]
 \centering
 \caption{\textbf{Estimates from ring-porous sugar concentration (mg/g) model}. Using a model testing the effects of increment depth on sugar concentration (mg/g) for ring-porous species, results in slightly muted variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
-\label{tab:lat}
+\label{tab:ringsug}
 \begingroup\footnotesize
 \begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
   \hline
  & mean & sd & 25\% & 75\% & 2.5\% & 97.5\% \\ 
   \hline
-$\mu_{\alpha}$ & 31.30 & 5.12 & 28.20 & 34.53 & 18.72 & 42.90 \\ 
-  $\mu_{increment 1-2}$ & -11.77 & 5.48 & -14.79 & -8.57 & -26.03 & 1.52 \\ 
-  $\mu_{increment 2-3}$ & -14.80 & 5.69 & -18.17 & -11.42 & -28.44 & -1.18 \\ 
-  $\mu_{increment 3-4}$ & -15.71 & 5.42 & -18.82 & -12.69 & -29.07 & -2.17 \\ 
-  $\mu_{increment 4-8}$ & -17.03 & 5.88 & -20.46 & -13.70 & -31.48 & -2.99 \\ 
-  $\mu_{increment 8-pith}$ & -18.41 & 12.91 & -24.64 & -12.92 & -48.19 & 18.02 \\ 
+$\mu_{\alpha}$ & 31.47 & 5.00 & 28.43 & 34.53 & 19.25 & 42.70 \\ 
+  $\mu_{increment 1-2}$ & -11.69 & 5.62 & -14.83 & -8.66 & -25.07 & 2.17 \\ 
+  $\mu_{increment 2-3}$ & -15.01 & 5.56 & -18.21 & -11.74 & -28.84 & -1.77 \\ 
+  $\mu_{increment 3-4}$ & -15.99 & 5.28 & -18.96 & -12.97 & -29.23 & -2.87 \\ 
+  $\mu_{increment 4-8}$ & -17.32 & 5.63 & -20.50 & -14.00 & -31.54 & -4.06 \\ 
+  $\mu_{increment 8-pith}$ & -19.12 & 11.56 & -24.96 & -13.17 & -49.91 & 11.69 \\ 
    \hline
 \end{tabular}
 \endgroup
@@ -169,22 +207,22 @@ $\mu_{\alpha}$ & 31.30 & 5.12 & 28.20 & 34.53 & 18.72 & 42.90 \\
 
 
 % latex table generated in R 3.6.0 by xtable 1.8-4 package
-% Mon Nov 18 11:41:30 2019
+% Mon Nov 18 16:04:02 2019
 \begin{table}[ht]
 \centering
-\caption{\textbf{Estimates from diffuse-porous sugar concentration (mg/g) model}. Using a model testing the effects of increment depth on sugar concentration (mg/g) for diffuse-porous species, results in slightly in greater variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
-\label{tab:lat}
+\caption{\textbf{Estimates from diffuse-porous sugar concentration (mg/g) model}. Using a model testing the effects of increment depth on sugar concentration (mg/g) for diffuse-porous species, results in slightly greater variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
+\label{tab:diffsug}
 \begingroup\footnotesize
 \begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
   \hline
  & mean & sd & 25\% & 75\% & 2.5\% & 97.5\% \\ 
   \hline
-$\mu_{\alpha}$ & 14.54 & 3.69 & 12.37 & 16.72 & 5.55 & 23.51 \\ 
-  $\mu_{increment 1-2}$ & -1.42 & 1.39 & -2.10 & -0.69 & -5.05 & 1.96 \\ 
-  $\mu_{increment 2-3}$ & -1.93 & 1.25 & -2.60 & -1.26 & -5.32 & 1.12 \\ 
-  $\mu_{increment 3-4}$ & -2.61 & 1.76 & -3.34 & -1.89 & -6.67 & 1.24 \\ 
-  $\mu_{increment 4-8}$ & -3.20 & 2.91 & -4.62 & -1.73 & -11.33 & 4.19 \\ 
-  $\mu_{increment 8-pith}$ & -6.28 & 9.48 & -10.65 & -1.56 & -33.37 & 16.38 \\ 
+$\mu_{\alpha}$ & 14.59 & 4.05 & 12.39 & 16.92 & 4.50 & 24.33 \\ 
+  $\mu_{increment 1-2}$ & -1.38 & 1.38 & -2.06 & -0.70 & -4.98 & 2.22 \\ 
+  $\mu_{increment 2-3}$ & -1.85 & 1.27 & -2.52 & -1.21 & -5.03 & 1.49 \\ 
+  $\mu_{increment 3-4}$ & -2.58 & 1.68 & -3.33 & -1.83 & -7.07 & 1.67 \\ 
+  $\mu_{increment 4-8}$ & -3.14 & 2.80 & -4.58 & -1.68 & -10.74 & 4.21 \\ 
+  $\mu_{increment 8-pith}$ & -6.82 & 12.60 & -11.04 & -1.85 & -38.82 & 18.67 \\ 
    \hline
 \end{tabular}
 \endgroup
@@ -192,22 +230,22 @@ $\mu_{\alpha}$ & 14.54 & 3.69 & 12.37 & 16.72 & 5.55 & 23.51 \\
 
 
 % latex table generated in R 3.6.0 by xtable 1.8-4 package
-% Mon Nov 18 11:41:30 2019
+% Mon Nov 18 16:04:02 2019
 \begin{table}[ht]
 \centering
 \caption{\textbf{Estimates from ring-porous starch concentration (mg/g) model}. Using a model testing the effects of increment depth on starch concentration (mg/g) for ring-porous species, results in slightly muted variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
-\label{tab:lat}
+\label{tab:ringstar}
 \begingroup\footnotesize
 \begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
   \hline
  & mean & sd & 25\% & 75\% & 2.5\% & 97.5\% \\ 
   \hline
-$\mu_{\alpha}$ & 16.90 & 5.21 & 13.71 & 20.13 & 3.83 & 29.63 \\ 
-  $\mu_{increment 1-2}$ & -10.41 & 5.04 & -13.12 & -7.57 & -23.05 & 1.71 \\ 
-  $\mu_{increment 2-3}$ & -17.19 & 5.96 & -20.74 & -13.81 & -31.31 & -2.13 \\ 
-  $\mu_{increment 3-4}$ & -16.57 & 6.49 & -20.26 & -12.98 & -32.11 & -1.83 \\ 
-  $\mu_{increment 4-8}$ & -17.58 & 5.79 & -20.83 & -14.15 & -31.72 & -4.00 \\ 
-  $\mu_{increment 8-pith}$ & -14.52 & 9.01 & -18.02 & -10.59 & -38.85 & 7.01 \\ 
+$\mu_{\alpha}$ & 16.96 & 5.06 & 13.94 & 20.14 & 4.48 & 28.54 \\ 
+  $\mu_{increment 1-2}$ & -10.34 & 4.92 & -12.97 & -7.46 & -24.04 & 1.31 \\ 
+  $\mu_{increment 2-3}$ & -17.40 & 6.09 & -20.80 & -13.97 & -32.41 & -2.30 \\ 
+  $\mu_{increment 3-4}$ & -16.70 & 6.20 & -20.15 & -13.14 & -32.41 & -1.54 \\ 
+  $\mu_{increment 4-8}$ & -17.54 & 5.87 & -20.91 & -14.17 & -31.57 & -2.65 \\ 
+  $\mu_{increment 8-pith}$ & -14.26 & 8.43 & -18.01 & -10.33 & -36.81 & 7.00 \\ 
    \hline
 \end{tabular}
 \endgroup
@@ -215,25 +253,80 @@ $\mu_{\alpha}$ & 16.90 & 5.21 & 13.71 & 20.13 & 3.83 & 29.63 \\
 
 
 % latex table generated in R 3.6.0 by xtable 1.8-4 package
-% Mon Nov 18 11:41:30 2019
+% Mon Nov 18 16:04:02 2019
 \begin{table}[ht]
 \centering
-\caption{\textbf{Estimates from diffuse-porous starch concentration (mg/g) model}. Using a model testing the effects of increment depth on starch concentration (mg/g) for diffuse-porous species, results in slightly in greater variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
-\label{tab:lat}
+\caption{\textbf{Estimates from diffuse-porous starch concentration (mg/g) model}. Using a model testing the effects of increment depth on starch concentration (mg/g) for diffuse-porous species, results in slightly greater variation in concentration across increments. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
+\label{tab:diffstar}
 \begingroup\footnotesize
 \begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
   \hline
  & mean & sd & 25\% & 75\% & 2.5\% & 97.5\% \\ 
   \hline
-$\mu_{\alpha}$ & 16.99 & 6.41 & 12.95 & 21.12 & 1.78 & 31.54 \\ 
-  $\mu_{increment 1-2}$ & -9.31 & 7.16 & -13.41 & -5.00 & -28.33 & 6.51 \\ 
-  $\mu_{increment 2-3}$ & -16.07 & 7.97 & -21.07 & -11.26 & -34.47 & 3.39 \\ 
-  $\mu_{increment 3-4}$ & -15.88 & 8.10 & -20.69 & -10.98 & -36.16 & 2.40 \\ 
-  $\mu_{increment 4-8}$ & -17.27 & 8.15 & -22.05 & -12.37 & -36.82 & 2.49 \\ 
-  $\mu_{increment 8-pith}$ & -10.11 & 9.12 & -13.74 & -6.15 & -35.11 & 12.48 \\ 
+$\mu_{\alpha}$ & 17.02 & 6.37 & 13.02 & 21.15 & 1.08 & 31.40 \\ 
+  $\mu_{increment 1-2}$ & -9.06 & 7.27 & -13.30 & -4.65 & -27.85 & 8.11 \\ 
+  $\mu_{increment 2-3}$ & -15.90 & 8.01 & -20.79 & -10.71 & -35.93 & 2.10 \\ 
+  $\mu_{increment 3-4}$ & -15.81 & 8.46 & -20.82 & -10.68 & -35.78 & 4.82 \\ 
+  $\mu_{increment 4-8}$ & -17.19 & 8.15 & -21.93 & -12.45 & -37.04 & 1.88 \\ 
+  $\mu_{increment 8-pith}$ & -9.99 & 7.63 & -13.97 & -6.08 & -30.27 & 9.98 \\ 
    \hline
 \end{tabular}
 \endgroup
 \end{table}
+
+
+% latex table generated in R 3.6.0 by xtable 1.8-4 package
+% Mon Nov 18 16:04:02 2019
+\begin{table}[ht]
+\centering
+\caption{\textbf{Estimates from ring-porous radiocarbon ages}. Using a model testing the effects of organ on radiocarbon age for ring-porous species, results in muted variation in age across organs. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
+\label{tab:ringradio}
+\begingroup\footnotesize
+\begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
+  \hline
+ & mean & 25\% & 75\% & 2.5\% & 97.5\% \\ 
+  \hline
+$\mu_{\alpha}$ & 1.37 & -0.43 & 3.13 & -4.98 & 7.53 \\ 
+  $\mu_{shoot 0-0.5}$ & -0.42 & -2.95 & 2.24 & -9.57 & 8.01 \\ 
+  $\mu_{shoot 0.5-1}$ & 3.47 & 0.99 & 5.96 & -5.27 & 12.07 \\ 
+  $\mu_{shoot 1-1.5}$ & 3.46 & 0.90 & 6.02 & -5.44 & 12.01 \\ 
+  $\mu_{shoot 1.5-2}$ & 7.56 & 5.03 & 9.98 & -0.86 & 16.29 \\ 
+  $\mu_{root 0-0.5}$ & 1.27 & -1.29 & 3.86 & -7.44 & 9.75 \\ 
+  $\mu_{root 0.5-1}$ & 4.04 & 1.53 & 6.62 & -4.56 & 12.45 \\ 
+  $\mu_{root 1-1.5}$ & 7.03 & 4.54 & 9.59 & -1.53 & 15.50 \\ 
+  $\mu_{root 1.5-2}$ & 9.40 & 6.95 & 11.93 & 0.61 & 17.96 \\ 
+  $\mu_{fineroot}$ & 2.91 & 0.36 & 5.47 & -6.04 & 11.63 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
+
+
+% latex table generated in R 3.6.0 by xtable 1.8-4 package
+% Mon Nov 18 16:04:02 2019
+\begin{table}[ht]
+\centering
+\caption{\textbf{Estimates from diffuse-porous radiocarbon ages}. Using a model testing the effects of organ on radiocarbon age for diffuse-porous species, results in slight greater variation in age across organs. We present posterior means, as well as 50 percent and 97.5 percent uncertainty intervals from the model.} 
+\label{tab:diffradio}
+\begingroup\footnotesize
+\begin{tabular}{|p{0.14\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|p{0.06\textwidth}|}
+  \hline
+ & mean & 25\% & 75\% & 2.5\% & 97.5\% \\ 
+  \hline
+$\mu_{\alpha}$ & 2.24 & 0.95 & 3.51 & -2.07 & 6.55 \\ 
+  $\mu_{shoot 0-0.5}$ & -0.62 & -2.42 & 1.12 & -6.63 & 5.66 \\ 
+  $\mu_{shoot 0.5-1}$ & 2.39 & 0.59 & 4.23 & -3.73 & 8.29 \\ 
+  $\mu_{shoot 1-1.5}$ & 5.18 & 3.37 & 6.97 & -0.88 & 11.09 \\ 
+  $\mu_{shoot 1.5-2}$ & 7.04 & 5.27 & 8.82 & 0.91 & 13.17 \\ 
+  $\mu_{root 0-0.5}$ & -1.29 & -3.10 & 0.52 & -7.13 & 4.83 \\ 
+  $\mu_{root 0.5-1}$ & 1.30 & -0.47 & 3.02 & -4.80 & 7.33 \\ 
+  $\mu_{root 1-1.5}$ & 4.15 & 2.33 & 5.93 & -1.89 & 10.34 \\ 
+  $\mu_{root 1.5-2}$ & 6.18 & 4.38 & 7.97 & -0.21 & 12.70 \\ 
+  $\mu_{fineroot}$ & 9.07 & 7.33 & 10.89 & 2.99 & 14.91 \\ 
+   \hline
+\end{tabular}
+\endgroup
+\end{table}
+
 
 \end{document}

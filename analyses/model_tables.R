@@ -19,11 +19,11 @@ setwd("~/Documents/git/nscradiocarbon/analyses/")
 #load("stan/ringsugar_seas.Rdata")
 #load("stan/diffsugar_seas.Rdata")
 #load("stan/ringstarch_seas.Rdata")
-load("stan/diffstarch_seas.Rdata")
+#load("stan/diffstarch_seas.Rdata")
 #load("stan/radioring_mod.Rdata")
-#load("stan/radiodiff_mod.Rdata")
+load("stan/radiodiff_mod.Rdata")
 
-modelhere <- diffseas.star
+modelhere <- raddiff.mod
 
 if(FALSE){
 fit50 <- as.data.frame(summary(modelhere, prob=0.5)$fixed)
@@ -32,6 +32,10 @@ fit98 <- as.data.frame(summary(modelhere, prob=0.975)$fixed)
 fit98 <- subset(fit98, select=c("l-97.5% CI", "u-97.5% CI"))
 
 fit <- cbind(fit50, fit98)
+
+colnames(fit) <- c("mean", "sd", "25%", "50%", "2.5%", "97.5%")
+
+write.csv(fit, file="output/ringradiomodel.csv", row.names=TRUE)
 }
 
 all50 <- broom::tidy(modelhere, prob=c(0.5))

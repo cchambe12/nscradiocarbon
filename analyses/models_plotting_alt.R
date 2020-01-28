@@ -66,7 +66,7 @@ load("stan/diffstarch_seas.Rdata")
 
 
 figpath <- "figures"
-figpathmore <- "ringstarch_seas" ### change based on model
+figpathmore <- "diffstarch" ### change based on model
 
 source("exp_muplot_alt.R")
 cols <- "black"
@@ -79,7 +79,7 @@ xlab <- "Model estimate of starch concentration (mg/g)"
 df <- ring.total
 season <- unique(df$season)
 
-modelhere <- ringseas.tot
+modelhere <- diffseas.star
 
 
 
@@ -178,8 +178,3 @@ mod.ranef$`75%` <- ifelse(!(mod.ranef$parameter%in%ints), mod.ranef$`75%` + mod.
 modoutput <- tidy(modelhere, prob=c(0.5))
 
 muplotfx(modelhere, "", 8, 8, c(0,6), c(-10, 70) , 72, 4.5)
-
-
-
-
-

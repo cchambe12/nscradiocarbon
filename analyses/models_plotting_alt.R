@@ -66,7 +66,14 @@ load("stan/diffstarch_seas.Rdata")
 
 
 figpath <- "figures"
-figpathmore <- "diffstarch" ### change based on model
+figpathmore <- "difftotal_seas" ### change based on model
+
+xlab <- "Model estimate of total concentration (mg/g)"
+
+df <- diff.total
+season <- unique(df$season)
+
+modelhere <- diffseas.tot
 
 source("exp_muplot_alt.R")
 cols <- "black"
@@ -74,14 +81,6 @@ my.pal <- rep(c("indianred1", "darkseagreen4", "darkorange2", "dodgerblue3"), 4)
 #my.pch <- rep(2:5)
 
 alphahere = 0.6
-xlab <- "Model estimate of starch concentration (mg/g)"
-
-df <- ring.total
-season <- unique(df$season)
-
-modelhere <- diffseas.star
-
-
 
 intercept <- coef(modelhere, prob=c(0.25, 0.75))$season[, c(1, 3:4), 1] %>%
   as.data.frame() %>%
@@ -138,7 +137,7 @@ for(i in 1:length(season)){
 threefour$parameter<-new.names
 mod.ranef <- full_join(mod.ranef, threefour)
 
-foureight <- coef(modelhere, prob=c(0.25, 0.75))$season[, c(1, 3:4), 4] %>%
+foureight <- coef(modelhere, prob=c(0.25, 0.75))$season[, c(1, 3:4), 5] %>%
   as.data.frame() %>%
   round(digits = 2) %>% 
   rename(mean = Estimate) %>%
@@ -152,7 +151,7 @@ for(i in 1:length(season)){
 foureight$parameter<-new.names
 mod.ranef <- full_join(mod.ranef, foureight)
 
-pith <- coef(modelhere, prob=c(0.25, 0.75))$season[, c(1, 3:4), 4] %>%
+pith <- coef(modelhere, prob=c(0.25, 0.75))$season[, c(1, 3:4), 6] %>%
   as.data.frame() %>%
   round(digits = 2) %>% 
   rename(mean = Estimate) %>%
@@ -178,3 +177,4 @@ mod.ranef$`75%` <- ifelse(!(mod.ranef$parameter%in%ints), mod.ranef$`75%` + mod.
 modoutput <- tidy(modelhere, prob=c(0.5))
 
 muplotfx(modelhere, "", 8, 8, c(0,6), c(-10, 70) , 72, 4.5)
+

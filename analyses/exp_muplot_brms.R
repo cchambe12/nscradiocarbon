@@ -31,7 +31,7 @@ muplotfx <- function(modelhere, nameforfig, width, height, ylim, xlim, leg1, leg
     points(pos.x,pos.y,cex=1.5,pch=19,col="darkblue")
     for(incrsi in 1:length(incrnum)){#incrsi=4
       pos.sps.i<-which(grepl(paste("[",incrsi,"]",sep=""),mod.ranef$parameter,fixed=TRUE))
-      jitt<-runif(1,0.05,0.4)
+      jitt<-(incrsi/10) + 0.05
       pos.y.sps.i<-pos.y-jitt
       pos.x.sps.i<-mod.ranef[pos.sps.i[i],"mean"]
       lines(mod.ranef[pos.sps.i[i],c("25%","75%")],rep(pos.y.sps.i,2),

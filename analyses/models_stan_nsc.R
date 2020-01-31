@@ -47,35 +47,46 @@ ring.starch <- ring[(ring$method=="starch"),]
 diff.starch <- diff[(diff$method=="starch"),]
 
 
-if(FALSE){
 ringtot.mod <- brm(conc ~ season + (season | increment), data=ring.total, 
-                          control=list(max_treedepth = 15,adapt_delta = 0.99))
+                          control=list(max_treedepth = 15,adapt_delta = 0.99),
+                   prior = prior(normal(0, 30), class = "Intercept") + prior(normal(0, 10), class = "sd") +
+                     prior(normal(0,10), class = "b"))
 
 save(ringtot.mod, file="stan/ringtotalconc_randincr.Rdata")
 
 difftot.mod <- brm(conc ~ season + (season | increment), data=diff.total,
-                         control=list(max_treedepth = 15,adapt_delta = 0.99))
+                         control=list(max_treedepth = 15,adapt_delta = 0.99),
+                   prior = prior(normal(0, 30), class = "Intercept") + prior(normal(0, 10), class = "sd") +
+                     prior(normal(0,10), class = "b"))
 
 save(difftot.mod, file="stan/difftotalconc_randincr.Rdata")
-}
+
 
 ringsug.mod <- brm(conc ~ season + (season | increment), data=ring.sugar, 
-                   control=list(max_treedepth = 15,adapt_delta = 0.99))
+                   control=list(max_treedepth = 15,adapt_delta = 0.99),
+                   prior = prior(normal(0, 30), class = "Intercept") + prior(normal(0, 10), class = "sd") +
+                     prior(normal(0,10), class = "b"))
 
 save(ringsug.mod, file="stan/ringsugarconc_randincr.Rdata")
 
 diffsug.mod <- brm(conc ~ season + (season | increment), data=diff.sugar,
-                   control=list(max_treedepth = 15,adapt_delta = 0.99))
+                   control=list(max_treedepth = 15,adapt_delta = 0.99),
+                   prior = prior(normal(0, 30), class = "Intercept") + prior(normal(0, 10), class = "sd") +
+                     prior(normal(0,10), class = "b"))
 
 save(diffsug.mod, file="stan/diffsugarconc_randincr.Rdata")
 
 ringstar.mod <- brm(conc ~ season + (season | increment), data=ring.starch, 
-                   control=list(max_treedepth = 15,adapt_delta = 0.99))
+                   control=list(max_treedepth = 15,adapt_delta = 0.99),
+                   prior = prior(normal(0, 30), class = "Intercept") + prior(normal(0, 10), class = "sd") +
+                     prior(normal(0,10), class = "b"))
 
 save(ringstar.mod, file="stan/ringstarchconc_randincr.Rdata")
 
 diffstar.mod <- brm(conc ~ season + (season | increment), data=diff.starch,
-                   control=list(max_treedepth = 15,adapt_delta = 0.99))
+                   control=list(max_treedepth = 15,adapt_delta = 0.99),
+                   prior = prior(normal(0, 30), class = "Intercept") + prior(normal(0, 10), class = "sd") +
+                     prior(normal(0,10), class = "b"))
 
 save(diffstar.mod, file="stan/diffstarchconc_randincr.Rdata")
 

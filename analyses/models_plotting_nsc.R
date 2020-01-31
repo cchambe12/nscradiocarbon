@@ -55,24 +55,24 @@ diff.starch <- diff[(diff$method=="starch"),]
 #load("stan/difftotalconc_randincr.Rdata")
 #load("stan/ringsugarconc_randincr.Rdata")
 #load("stan/diffsugarconc_randincr.Rdata")
-#load("stan/ringstarchconc_randincr.Rdata")
-load("stan/diffstarchconc_randincr.Rdata")
+load("stan/ringstarchconc_randincr.Rdata")
+#load("stan/diffstarchconc_randincr.Rdata")
 
 
 figpath <- "figures"
-figpathmore <- "diffstarch_brms" ### change based on model
+figpathmore <- "ringstarch_brms" ### change based on model
 
 source("exp_muplot_brms.R")
 cols <- adjustcolor("indianred3", alpha.f = 0.3) 
 my.pal <- rep(brewer.pal(n = 8, name = "Dark2"), 5)
 
 alphahere = 0.4
-xlab <- "Model estimate of change in starch concentration (diffuse porous)"
+xlab <- "Model estimate of starch concentration"
 
-df <- diff.starch
+df <- ring.starch
 incr <- unique(df$increment)
 
-modelhere <- diffstar.mod
+modelhere <- ringstar.mod
 
 
 
@@ -130,64 +130,6 @@ for(i in 1:length(incr)){
 }
 winter$parameter<-new.names
 mod.ranef <- full_join(mod.ranef, winter)
-
-if(FALSE){
-woodring <- coef(modelhere, prob=c(0.25, 0.75))$incr[, c(1, 3:4), 4] %>%
-  as.data.frame() %>%
-  round(digits = 2) %>% 
-  rename(mean = Estimate) %>%
-  rename(`25%` = Q25) %>%
-  rename(`75%` = Q75) %>%
-  dplyr::select( mean, `25%`, `75%`) 
-new.names<-NULL
-for(i in 1:length(incr)){
-  new.names[i]<-paste("woodring", "[", i, "]", sep="")
-}
-woodring$parameter<-new.names
-mod.ranef <- full_join(mod.ranef, woodring)
-
-summerring <- coef(modelhere, prob=c(0.25, 0.75))$incr[, c(1, 3:4), 4] %>%
-  as.data.frame() %>%
-  round(digits = 2) %>% 
-  rename(mean = Estimate) %>%
-  rename(`25%` = Q25) %>%
-  rename(`75%` = Q75) %>%
-  dplyr::select( mean, `25%`, `75%`) 
-new.names<-NULL
-for(i in 1:length(incr)){
-  new.names[i]<-paste("seasonbsummer:woodring", "[", i, "]", sep="")
-}
-summerring$parameter<-new.names
-mod.ranef <- full_join(mod.ranef, summerring)
-
-autumnring <- coef(modelhere, prob=c(0.25, 0.75))$incr[, c(1, 3:4), 4] %>%
-  as.data.frame() %>%
-  round(digits = 2) %>% 
-  rename(mean = Estimate) %>%
-  rename(`25%` = Q25) %>%
-  rename(`75%` = Q75) %>%
-  dplyr::select( mean, `25%`, `75%`) 
-new.names<-NULL
-for(i in 1:length(incr)){
-  new.names[i]<-paste("seasoncautumn:woodring", "[", i, "]", sep="")
-}
-autumnring$parameter<-new.names
-mod.ranef <- full_join(mod.ranef, autumnring)
-
-winterring <- coef(modelhere, prob=c(0.25, 0.75))$incr[, c(1, 3:4), 4] %>%
-  as.data.frame() %>%
-  round(digits = 2) %>% 
-  rename(mean = Estimate) %>%
-  rename(`25%` = Q25) %>%
-  rename(`75%` = Q75) %>%
-  dplyr::select( mean, `25%`, `75%`) 
-new.names<-NULL
-for(i in 1:length(incr)){
-  new.names[i]<-paste("seasonwinter:woodring", "[", i, "]", sep="")
-}
-winterring$parameter<-new.names
-mod.ranef <- full_join(mod.ranef, winterring)
-}
 
 ints <- c("intercept[1]", "intercept[2]", "intercept[3]", "intercept[4]", "intercept[5]", "intercept[6]")
 mod.ranef$int.mean <- rep(mod.ranef$mean[(mod.ranef$parameter%in%ints)])

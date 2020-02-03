@@ -56,7 +56,7 @@ library(Hmisc)
 
 \textbf{\LARGE{Methods: Data analysis}}
 
-\par We estimated the effects of increment depth (i.e., 0-1cm, 1-2cm, 2-3cm, 3-4cm, 4-8cm, 8cm-pith) on total, sugar and starch concentrations for both ring-porous and diffuse-porous species using Bayesian hierarchical models with the brms package \citep{brms}, version 2.3.1,  in R \citep{R}, version 3.3.1. Seasons are modeled hierarchically, generating an estimate of the overall response across season and estimates of season-level responses---and the distribution from which they are drawn. The intercept in the model is increment 0-1cm since the predictors are discrete groups:  
+\par We estimated the effects of increment depth (i.e., 0-1cm, 1-2cm, 2-3cm, 3-4cm, 4-8cm, 8cm-pith) on total, sugar and starch concentrations for both ring-porous and diffuse-porous species using Bayesian hierarchical models with the brms package \citep{brms}, version 2.3.1,  in R \citep{R}, version 3.3.1. Due to missing data for the 8cm-pith increment, we imputed data for the missing months based on actual values measured in January and July \citep{Gelman2008}. Seasons are modeled hierarchically, generating an estimate of the overall response across season and estimates of season-level responses---and the distribution from which they are drawn. The intercept in the model is increment 0-1cm since the predictors are discrete groups:  
 
 \begin{align*}
 y_i &= \alpha_{season[i]} + \beta_{increment1-2_{season[i]}} + \beta_{increment2-3_{season[i]}} + \beta_{increment3-4_{season[i]}}\\

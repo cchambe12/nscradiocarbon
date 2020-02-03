@@ -66,11 +66,11 @@ load("stan/diffstarch_seas.Rdata")
 
 
 figpath <- "figures"
-figpathmore <- "difftotal_seas" ### change based on model
+figpathmore <- "difftot_seas_imp" ### change based on model
 
 xlab <- "Model estimate of total concentration (mg/g)"
 
-df <- diff.total
+df <- difftotimp
 season <- unique(df$season)
 
 modelhere <- diffseas.tot

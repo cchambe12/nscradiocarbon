@@ -14,16 +14,16 @@ library(broom)
 ## Load the data
 setwd("~/Documents/git/nscradiocarbon/analyses/")
 
-#load("stan/ringtotal_seas.Rdata")
+load("stan/ringtotal_seas.Rdata")
 #load("stan/difftotal_seas.Rdata")
 #load("stan/ringsugar_seas.Rdata")
 #load("stan/diffsugar_seas.Rdata")
 #load("stan/ringstarch_seas.Rdata")
 #load("stan/diffstarch_seas.Rdata")
 #load("stan/radioring_mod.Rdata")
-load("stan/radiodiff_mod.Rdata")
+#load("stan/radiodiff_mod.Rdata")
 
-modelhere <- raddiff.mod
+modelhere <- diffseas.sug
 
 if(FALSE){
 fit50 <- as.data.frame(summary(modelhere, prob=0.5)$fixed)
@@ -68,4 +68,4 @@ rownames(fit) <- c("$\\mu_{\\alpha}$", "$\\mu_{increment 1-2}$",
 
 
 
-write.csv(fit,"output/diffstarch_tab.csv", row.names = TRUE)
+write.csv(fit,"output/diffsugar_tab_imp.csv", row.names = TRUE)

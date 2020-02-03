@@ -96,7 +96,7 @@ We ran four chains, each with 2 500 warm-up iterations and 4 000 sampling iterat
 
 <<label=ringtotaltab, results="asis", echo=FALSE, warning=FALSE, message=FALSE, , fig.pos="H", fig.width=7, fig.height=4, fig.align='center'>>=
 
-ringtot<-read.csv("../analyses/output/ringtotal_tab.csv", header=TRUE)
+ringtot<-read.csv("../analyses/output/ringtotal_tab_imp.csv", header=TRUE)
 rownames(ringtot)<-ringtot$X
   ringtot<-ringtot[,-1]      
   rownames(ringtot) <- c("$\\mu_{\\alpha}$", "$\\mu_{increment 1-2}$", 
@@ -132,7 +132,7 @@ print(mod.table, include.rownames=TRUE, hline.after = c(-1,0,30),caption.placeme
 
 <<label=difftotaltab, results="asis", echo=FALSE, warning=FALSE, message=FALSE, , fig.pos="H", fig.width=7, fig.height=4, fig.align='center'>>=
 
-difftot<-read.csv("../analyses/output/difftotal_tab.csv", header=TRUE)
+difftot<-read.csv("../analyses/output/difftotal_tab_imp.csv", header=TRUE)
 rownames(difftot)<-difftot$X
   difftot<-difftot[,-1]  
   rownames(difftot) <- c("$\\mu_{\\alpha}$", "$\\mu_{increment 1-2}$", 
@@ -168,7 +168,7 @@ print(mod.table, include.rownames=TRUE, hline.after = c(-1,0,30),caption.placeme
 
 <<label=ringsugartab, results="asis", echo=FALSE, warning=FALSE, message=FALSE, , fig.pos="H", fig.width=7, fig.height=4, fig.align='center'>>=
 
-ringsug<-read.csv("../analyses/output/ringsugar_tab.csv", header=TRUE)
+ringsug<-read.csv("../analyses/output/ringsugar_tab_imp.csv", header=TRUE)
 rownames(ringsug)<-ringsug$X
   ringsug<-ringsug[,-1]   
   rownames(ringsug) <- c("$\\mu_{\\alpha}$", "$\\mu_{increment 1-2}$", 
@@ -204,7 +204,7 @@ print(mod.table, include.rownames=TRUE, hline.after = c(-1,0,30),caption.placeme
 
 <<label=diffsugartab, results="asis", echo=FALSE, warning=FALSE, message=FALSE, , fig.pos="H", fig.width=7, fig.height=4, fig.align='center'>>=
 
-diffsug<-read.csv("../analyses/output/diffsugar_tab.csv", header=TRUE)
+diffsug<-read.csv("../analyses/output/diffsugar_tab_imp.csv", header=TRUE)
 rownames(diffsug)<-diffsug$X
   diffsug<-diffsug[,-1]  
   rownames(diffsug) <- c("$\\mu_{\\alpha}$", "$\\mu_{increment 1-2}$", 
@@ -240,7 +240,7 @@ print(mod.table, include.rownames=TRUE, hline.after = c(-1,0,30),caption.placeme
 
 <<label=ringstarchtab, results="asis", echo=FALSE, warning=FALSE, message=FALSE, , fig.pos="H", fig.width=7, fig.height=4, fig.align='center'>>=
 
-ringstar<-read.csv("../analyses/output/ringstarch_tab.csv", header=TRUE)
+ringstar<-read.csv("../analyses/output/ringstarch_tab_imp.csv", header=TRUE)
 rownames(ringstar)<-ringstar$X
   ringstar<-ringstar[,-1]  
   rownames(ringstar) <- c("$\\mu_{\\alpha}$", "$\\mu_{increment 1-2}$", 
@@ -276,7 +276,7 @@ print(mod.table, include.rownames=TRUE, hline.after = c(-1,0,30),caption.placeme
 
 <<label=diffstarchtab, results="asis", echo=FALSE, warning=FALSE, message=FALSE, , fig.pos="H", fig.width=7, fig.height=4, fig.align='center'>>=
 
-diffstar<-read.csv("../analyses/output/diffstarch_tab.csv", header=TRUE)
+diffstar<-read.csv("../analyses/output/difstarch_tab_imp.csv", header=TRUE)
 rownames(diffstar)<-diffstar$X
   diffstar<-diffstar[,-1] 
   rownames(diffstar) <- c("$\\mu_{\\alpha}$", "$\\mu_{increment 1-2}$", 

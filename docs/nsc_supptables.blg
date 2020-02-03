@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: nsc_supptables.aux
+The style file: ..//bib/styles/gcb.bst
+Database file #1: ..//bib/nsc.bib.bib
+Warning--I didn't find a database entry for "Gelman2008"
+You've used 3 entries,
+            2914 wiz_defined-function locations,
+            620 strings with 5202 characters,
+and the built_in function-call counts, 2584 in all, are:
+= -- 224
+> -- 86
+< -- 2
++ -- 42
+- -- 24
+* -- 203
+:= -- 367
+add.period$ -- 6
+call.type$ -- 3
+change.case$ -- 23
+chr.to.int$ -- 3
+cite$ -- 3
+duplicate$ -- 218
+empty$ -- 227
+format.name$ -- 29
+if$ -- 536
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 29
+newline$ -- 21
+num.names$ -- 12
+pop$ -- 78
+preamble$ -- 1
+purify$ -- 20
+quote$ -- 0
+skip$ -- 58
+stack$ -- 0
+substring$ -- 225
+swap$ -- 57
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 24
+warning$ -- 0
+while$ -- 18
+width$ -- 0
+write$ -- 43
+(There was 1 warning)

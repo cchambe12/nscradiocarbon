@@ -1,17 +1,5 @@
-#### Now for plotting the models...
-# Started 15 October 2019 by Cat
-## with season as random effect
-
-
-### Main Question:
-# This is really what I want to show - 
-# that concentrations vary seasonally A LOT in shallower increments, and only a little in deeper increments.
-## And this varies between diffuse and ring-porous wood anatomies 
-
-## Main Issues with data:
-# Right skew of data for total and total sugar concentration
-## zero-inflated starch concentration
-
+#### A new way to plot total concentrations
+# Started 19 Feb 2020 by Cat
 
 ## housekeeping
 rm(list=ls()) 
@@ -29,13 +17,8 @@ library(broom)
 setwd("~/Documents/git/nscradiocarbon/analyses/")
 
 ### Ring-porous first:
-#ring <- read.csv("input/ring.csv")
-#diff <- read.csv("input/diff.csv")
-
-all <- read.csv("input/CC_data.csv")
-
-ring <- all[(all$wood=="ring"),]
-diff <- all[(all$wood=="diff"),]
+ring <- read.csv("input/ring.csv")
+diff <- read.csv("input/diff.csv")
 
 ring$season <- ifelse(ring$season=="spring", "aspring", ring$season)
 ring$season <- ifelse(ring$season=="summer", "bsummer", ring$season)
@@ -48,32 +31,40 @@ diff$season <- ifelse(diff$season=="autumn", "cautumn", diff$season)
 ring.total <- ring[(ring$method=="total"),]
 diff.total <- diff[(diff$method=="total"),]
 
-
 ring.sugar <- ring[(ring$method=="sugar"),]
 diff.sugar <- diff[(diff$method=="sugar"),]
 
 ring.starch <- ring[(ring$method=="starch"),]
 diff.starch <- diff[(diff$method=="starch"),]
 
-
-
-load("stan/ringtotal_seas.Rdata")
-load("stan/difftotal_seas.Rdata")
 load("stan/ringsugar_seas.Rdata")
 load("stan/diffsugar_seas.Rdata")
 load("stan/ringstarch_seas.Rdata")
 load("stan/diffstarch_seas.Rdata")
+load("stan/ringtotal_seas.Rdata")
 
 
 figpath <- "figures"
-figpathmore <- "difftot_seas_imp" ### change based on model
+figpathmore <- "ringtot_outputcomb" ### change based on model
 
 xlab <- "Model estimate of total concentration (mg/g)"
 
-df <- difftotimp
+df <- ring.total
 season <- unique(df$season)
 
-modelhere <- diffseas.tot
+
+modelhere <- combine_models(ringseas.star, ringseas.sug, check_data = FALSE)
+
+modelhere1 <- ringseas.sug
+modelhere2 <- ringseas.star
+
+modoutput1 <- tidy(modelhere1, prob=c(0.5))
+modoutput2 <- tidy(modelhere2, prob=c(0.5))
+modoutput <- data.frame(term=modoutput1$term, estimate=modoutput1$estimate + modoutput2$estimate,
+                        std.error=modoutput1$std.error + modoutput2$std.error,
+                        lower=modoutput1$lower + modoutput2$lower,
+                        upper=modoutput1$upper + modoutput2$upper)
+
 
 source("exp_muplot_alt.R")
 cols <- "black"
@@ -177,28 +168,4 @@ mod.ranef$`75%` <- ifelse(!(mod.ranef$parameter%in%ints), mod.ranef$`75%` + mod.
 modoutput <- tidy(modelhere, prob=c(0.5))
 
 muplotfx(modelhere, "", 8, 8, c(0,6), c(-10, 70) , 72, 4.5)
-
-
-
-##### Now let's plot the posteriors against the raw data
-load("stan/ringtotal_seas.Rdata")
-load("stan/difftotal_seas.Rdata")
-load("stan/ringsugar_seas.Rdata")
-load("stan/diffsugar_seas.Rdata")
-load("stan/ringstarch_seas.Rdata")
-load("stan/diffstarch_seas.Rdata")
-
-
-ypred <- extract_draws(ringseas.tot)$data$Y
-yraw <- ring.total$conc
-
-plot(ypred ~ yraw, col=c("blue", "red"))
-pp_check(ringseas.tot)
-pp_check(ringseas.tot, type="stat", stat="max")
-
-
-
-
-
-
 

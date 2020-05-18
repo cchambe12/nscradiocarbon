@@ -75,7 +75,7 @@ season <- unique(df$season)
 
 modelhere <- diffseas.tot
 
-source("exp_muplot_alt.R")
+source("source/exp_muplot_alt.R")
 cols <- "black"
 my.pal <- rep(c("indianred1", "darkseagreen4", "darkorange2", "dodgerblue3"), 4)
 #my.pch <- rep(2:5)

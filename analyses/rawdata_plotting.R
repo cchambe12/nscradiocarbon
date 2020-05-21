@@ -42,7 +42,7 @@ ring.starch <- ring[(ring$method=="starch"),]
 diff.starch <- diff[(diff$method=="starch"),]
 
 #### Now we want to make a raw data plot that mirrors the muplot 
-df <- diff.total
+df <- ring.total
 
 source("source/rawdataprep.R")
 
@@ -64,16 +64,16 @@ rawplot<-ggplot(rawprep, aes(x=lower, xend=upper, y=jvar, yend=jvar)) +
   scale_color_manual(values=c(cols, my.pal), labels=sort(unique(rawprep$group))) +
   scale_size_manual(values=c(3,2,2,2,2), labels=sort(unique(rawprep$group))) +
   scale_alpha_manual(values=c(1,0.6,0.6,0.6,0.6), labels=sort(unique(rawprep$group))) +
-  coord_cartesian(xlim=c(0,60))
+  coord_cartesian(xlim=c(0,80))
 
 
-png("figures/difftotal_raw.png", ### makes it a nice png and saves it so it doesn't take forever to load as a pdf!
+png("figures/diffstarch_raw.png", ### makes it a nice png and saves it so it doesn't take forever to load as a pdf!
     width=7,
     height=6, units="in", res = 350 )
 grid.arrange(rawplot)
 dev.off()
 
-svg("figures/difftotal_raw.svg")
+svg("figures/diffstarch_raw.svg")
 grid.arrange(rawplot)
 dev.off()
 

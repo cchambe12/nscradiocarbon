@@ -9,7 +9,7 @@ NSC and Radiocarbon Project: https://github.com/cchambe12/nscradiocarbon
 Order of operations in analyses folder:
 fakedata_nsc.R: builds fake data and test models to make sure they are accurate 
 
-models_stan_nsc.R: builds all nsc models. This file imputes data for spring and winter in 8-pith and then builds models for total, sugar and starch concentrations across the ring- and diffuse-porous species
+models_stan_nsc.R: builds all nsc models. This file imputes data for spring and autumn in 8-pith and then builds models for total, sugar and starch concentrations across the ring- and diffuse-porous species
 
 models_plotting_alt.R: makes muplots used in main manuscript. Sources exp_muplot_alt.R
 

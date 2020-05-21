@@ -192,13 +192,22 @@ load("stan/diffstarch_seas.Rdata")
 ypred <- extract_draws(ringseas.tot)$data$Y
 yraw <- ring.total$conc
 
-plot(ypred ~ yraw, col=c("blue", "red"))
+plot(pp[,1]~ yraw, col=c("blue", "red"))
 pp_check(ringseas.tot)
 pp_check(ringseas.tot, type="stat", stat="max")
 
 
+pp <- as.data.frame(predict(ringseas.tot, probs = c(0.25, 0.75)))
+pp.raw <- cbind(pp, yraw)
+
+plot(pp.raw$Q25 ~ ring.total$conc, type = "p", col="blue", pch = 16, cex.lab=1.5, cex.axis=1.5,
+     xlab = "Predicted total concentration (mg/g)", ylab = "Observed total concentration (mg/g)",
+     xlim = c(0, 150), ylim = c(0, 150))
+points(pp.raw$Q75 ~ ring.total$conc, col="blue", pch = 16)
+points(pp.raw$Estimate ~ ring.total$conc, col="black", pch = 16)
+abline(lm(pp.raw$Estimate ~ ring.total$conc), col="red")
 
 
 
-
-
+ggplot(pp.raw, aes(y=Estimate, x=yraw, col=Estimate)) + geom_point() + geom_abline(intercept=0) +
+  coord_cartesian(xlim=c(0, 150), ylim=c(0,150)) 

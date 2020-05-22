@@ -57,12 +57,12 @@ diff.starch <- diff[(diff$method=="starch"),]
 
 
 
-load("stan/ringtotal_seas.Rdata")
-load("stan/difftotal_seas.Rdata")
-load("stan/ringsugar_seas.Rdata")
-load("stan/diffsugar_seas.Rdata")
-load("stan/ringstarch_seas.Rdata")
-load("stan/diffstarch_seas.Rdata")
+load("stan/ringtotal_seas_imp.Rdata")
+load("stan/difftotal_seas_imp.Rdata")
+load("stan/ringsugar_seas_imp.Rdata")
+load("stan/diffsugar_seas_imp.Rdata")
+load("stan/ringstarch_seas_imp.Rdata")
+load("stan/diffstarch_seas_imp.Rdata")
 
 
 figpath <- "figures"
@@ -181,33 +181,35 @@ muplotfx(modelhere, "", 8, 8, c(0,6), c(-10, 70) , 72, 4.5)
 
 
 ##### Now let's plot the posteriors against the raw data
-load("stan/ringtotal_seas.Rdata")
-load("stan/difftotal_seas.Rdata")
-load("stan/ringsugar_seas.Rdata")
-load("stan/diffsugar_seas.Rdata")
-load("stan/ringstarch_seas.Rdata")
-load("stan/diffstarch_seas.Rdata")
+#load("stan/ringtotal_seas.Rdata")
+#load("stan/difftotal_seas.Rdata")
+#load("stan/ringsugar_seas.Rdata")
+#load("stan/diffsugar_seas.Rdata")
+#load("stan/ringstarch_seas.Rdata")
+#load("stan/diffstarch_seas.Rdata")
 
-
-ypred <- extract_draws(ringseas.tot)$data$Y
-yraw <- ring.total$conc
-
-plot(pp[,1]~ yraw, col=c("blue", "red"))
-pp_check(ringseas.tot)
-pp_check(ringseas.tot, type="stat", stat="max")
-
-
-pp <- as.data.frame(predict(ringseas.tot, probs = c(0.25, 0.75)))
+pp <- as.data.frame(predict(diffseas.star, probs = c(0.25, 0.75)))
+pp <- pp[c(1:513),]
+yraw <- diff.starch$conc
 pp.raw <- cbind(pp, yraw)
 
-plot(pp.raw$Q25 ~ ring.total$conc, type = "p", col="blue", pch = 16, cex.lab=1.5, cex.axis=1.5,
-     xlab = "Predicted total concentration (mg/g)", ylab = "Observed total concentration (mg/g)",
-     xlim = c(0, 150), ylim = c(0, 150))
-points(pp.raw$Q75 ~ ring.total$conc, col="blue", pch = 16)
-points(pp.raw$Estimate ~ ring.total$conc, col="black", pch = 16)
-abline(lm(pp.raw$Estimate ~ ring.total$conc), col="red")
+pred <- ggplot(pp.raw, aes(y=Estimate, x=yraw)) + geom_point() +
+     ylab("Predicted starch concentration (mg/g)") + xlab("Observed starch concentration (mg/g)") +
+     coord_cartesian(xlim = c(0, 150), ylim = c(0, 150))
+
+pdf("~/Documents/git/nscradiocarbon/analyses/figures/diffstarch_predvraw.pdf", ### makes it a nice png and saves it so it doesn't take forever to load as a pdf!
+    width=5,
+    height=5)
+grid.arrange(pred)
+dev.off()
+
+svg("~/Documents/git/nscradiocarbon/analyses/figures/diffstarch_predvraw.svg", width=5, height=5)
+grid.arrange(pred)
+dev.off()
 
 
 
-ggplot(pp.raw, aes(y=Estimate, x=yraw, col=Estimate)) + geom_point() + geom_abline(intercept=0) +
-  coord_cartesian(xlim=c(0, 150), ylim=c(0,150)) 
+#points(pp.raw$Q75 ~ ring.total$conc, col="blue", pch = 16)
+#points(pp.raw$Estimate ~ ring.total$conc, col="black", pch = 16)
+#abline(lm(pp.raw$Estimate ~ ring.total$conc), col="red")
+

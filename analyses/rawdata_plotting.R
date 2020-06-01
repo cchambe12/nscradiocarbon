@@ -29,8 +29,10 @@ library(broom)
 setwd("~/Documents/git/nscradiocarbon/analyses/")
 
 ### Ring-porous first:
-ring <- read.csv("input/ring.csv")
-diff <- read.csv("input/diff.csv")
+all <- read.csv("input/CC_data.csv")
+
+ring <- all[(all$wood=="ring"),]
+diff <- all[(all$wood=="diff"),]
 
 ring.total <- ring[(ring$method=="total"),]
 diff.total <- diff[(diff$method=="total"),]
@@ -42,7 +44,7 @@ ring.starch <- ring[(ring$method=="starch"),]
 diff.starch <- diff[(diff$method=="starch"),]
 
 #### Now we want to make a raw data plot that mirrors the muplot 
-df <- ring.total
+df <- diff.starch
 
 source("source/rawdataprep.R")
 
@@ -54,7 +56,7 @@ rawplot<-ggplot(rawprep, aes(x=lower, xend=upper, y=jvar, yend=jvar)) +
   geom_segment(arrow = arrow(length = unit(0.00, "npc")), aes(col=group, alpha=group)) +
   guides(size=FALSE) +
   scale_y_discrete(limits = sort(unique(rawprep$term[rawprep$group=="atotal"])), labels=rev(c("0-1", "1-2", "2-3", "3-4", "4-8", "8-pith"))) +
-  xlab("Total concentration (mg/g)") + ylab("") + theme_linedraw() +
+  xlab("Starch concentration (mg/g)") + ylab("") + theme_linedraw() +
   theme(legend.text=element_text(size=7), legend.title = element_text(size=9), legend.background = element_rect(linetype="solid", color="grey", size=0.5),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(), 
         panel.background = element_blank(), axis.line = element_line(colour = "black"), 

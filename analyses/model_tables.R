@@ -14,14 +14,14 @@ library(broom)
 ## Load the data
 setwd("~/Documents/git/nscradiocarbon/analyses/")
 
-load("stan/ringtotal_seas.Rdata")
-#load("stan/difftotal_seas.Rdata")
-#load("stan/ringsugar_seas.Rdata")
-#load("stan/diffsugar_seas.Rdata")
-#load("stan/ringstarch_seas.Rdata")
-#load("stan/diffstarch_seas.Rdata")
-#load("stan/radioring_mod.Rdata")
-#load("stan/radiodiff_mod.Rdata")
+load("stan/ringtotal_seas_imp.Rdata")
+#load("stan/difftotal_seas_imp.Rdata")
+#load("stan/ringsugar_seas_imp.Rdata")
+#load("stan/diffsugar_seas_imp.Rdata")
+#load("stan/ringstarch_seas_imp.Rdata")
+#load("stan/diffstarch_seas_imp.Rdata")
+#load("stan/radioring_mod_imp.Rdata")
+#load("stan/radiodiff_mod_imp.Rdata")
 
 modelhere <- diffseas.sug
 

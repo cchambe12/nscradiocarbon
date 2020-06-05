@@ -80,12 +80,63 @@ grid.arrange(rawplot)
 dev.off()
 
 
-if(FALSE){
+
 ####### Let's do some simple anovas and linear mixed models
 library(lme4)
 library(arm)
 library(car)
+  
 
+all <- read.csv("input/CC_data.csv")
+
+ring <- all[(all$wood=="ring"),]
+diff <- all[(all$wood=="diff"),]
+
+ring.sugar <- ring[(ring$method=="sugar"),]
+diff.sugar <- diff[(diff$method=="sugar"),]
+  
+### First Diffuse
+diff.sugar.01.mod<- aov(conc ~ season, data=diff.sugar[(diff.sugar$increment=="0-1"),])
+summary(diff.sugar.01.mod)
+
+diff.sugar.12.mod<- aov(conc ~ season, data=diff.sugar[(diff.sugar$increment=="1-2"),])
+summary(diff.sugar.12.mod)
+
+diff.sugar.23.mod<- aov(conc ~ season, data=diff.sugar[(diff.sugar$increment=="2-3"),])
+summary(diff.sugar.23.mod)
+
+diff.sugar.34.mod<- aov(conc ~ season, data=diff.sugar[(diff.sugar$increment=="3-4"),])
+summary(diff.sugar.34.mod)
+
+diff.sugar.48.mod<- aov(conc ~ season, data=diff.sugar[(diff.sugar$increment=="4-8"),])
+summary(diff.sugar.48.mod)
+
+diff.sugar.8p.mod<- aov(conc ~ season, data=diff.sugar[(diff.sugar$increment=="8-pith"),])
+summary(diff.sugar.8p.mod)
+
+
+### Now Ring
+ring.sugar.01.mod<- aov(conc ~ season, data=ring.sugar[(ring.sugar$increment=="0-1"),])
+summary(ring.sugar.01.mod)
+
+ring.sugar.12.mod<- aov(conc ~ season, data=ring.sugar[(ring.sugar$increment=="1-2"),])
+summary(ring.sugar.12.mod)
+
+ring.sugar.23.mod<- aov(conc ~ season, data=ring.sugar[(ring.sugar$increment=="2-3"),])
+summary(ring.sugar.23.mod)
+
+ring.sugar.34.mod<- aov(conc ~ season, data=ring.sugar[(ring.sugar$increment=="3-4"),])
+summary(ring.sugar.34.mod)
+
+ring.sugar.48.mod<- aov(conc ~ season, data=ring.sugar[(ring.sugar$increment=="4-8"),])
+summary(ring.sugar.48.mod)
+
+ring.sugar.8p.mod<- aov(conc ~ season, data=ring.sugar[(ring.sugar$increment=="8-pith"),])
+summary(ring.sugar.8p.mod)
+
+
+if(FALSE){
+#### Extra anovas
 ringtotmod <- lm(conc ~ increment*season, data=ring.total)
 display(ringtotmod)
 Anova(ringtotmod)
